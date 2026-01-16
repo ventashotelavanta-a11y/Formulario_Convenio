@@ -1,4 +1,3 @@
-Código HTML y CSS (Todo en uno)
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -238,4 +237,36 @@ Código HTML y CSS (Todo en uno)
 
 </body>
 </html>
-Notas par
+<div class="form-group">
+        <label>Nombre</label>
+        <input type="text" name="nombre" required>
+    </div>
+    
+    <div class="form-group">
+        <label>Apellidos</label>
+        <input type="text" name="apellidos" required>
+    </div>
+    
+    <div class="form-group">
+        <label>Empresa</label>
+        <input type="text" name="empresa" required>
+    </div>
+    
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" required>
+    </div>
+    
+    <div class="form-group">
+        <label>Teléfono</label>
+        <input type="tel" name="telefono" required>
+    </div>
+
+    <!-- Casilla de términos -->
+    <div class="checkbox-group">
+        <input type="checkbox" name="acepta_terminos" id="terms" required>
+        <label for="terms">He leído y acepto los términos y condiciones.</label>
+    </div>
+
+    <button type="submit" class="btn-submit">Enviar Convenio</button>
+</form>
