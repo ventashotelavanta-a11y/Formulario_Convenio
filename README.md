@@ -2,7 +2,7 @@
 
 Sistema completo para gestionar solicitudes de convenios empresariales con generación automática de PDFs y envío por correo electrónico.
 
-![Avanta Hotel & Villas](formulario/logo_avanta_principal.png)
+![Avanta Hotel & Villas]([formulario/logo_avanta_principal.png](https://drive.google.com/file/d/1V5yB8NDfOvo2CgBYzIv7nBOspiB7Wwsx/view?usp=sharing))
 
 ## 🎯 ¿Qué hace este sistema?
 
