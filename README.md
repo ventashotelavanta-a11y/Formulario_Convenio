@@ -1,172 +1,155 @@
-# Sistema de Convenios Automatizado - Avanta Hotel & Villas
+# Formulario de Convenios - Avanta Hotel & Villas
 
-Sistema completo para gestionar solicitudes de convenios empresariales con generación automática de PDFs y envío por correo electrónico.
+## 📁 Archivos en esta carpeta
 
-![Avanta Hotel & Villas]([[formulario/logo_avanta_principal.png](https://drive.google.com/file/d/1V5yB8NDfOvo2CgBYzIv7nBOspiB7Wwsx))
+- `index.html` - Formulario web para solicitudes de convenio
+- `logo_avanta_principal.png` - Logo oficial de Avanta
 
-## 🎯 ¿Qué hace este sistema?
+## 🚀 Instalación
 
-1. **Formulario web** donde las empresas solicitan convenios
-2. **Validación automática** de datos con n8n
-3. **Generación de PDF** del convenio personalizado
-4. **Envío automático** por email al cliente y equipo comercial
-
-## 📂 Estructura del Proyecto
-
-```
-Formulario_Convenio/
-├── README.md                           # Este archivo
-├── GUIA_COMPLETA.md                    # Documentación detallada
-│
-├── formulario/                         # Formulario web
-│   ├── index.html                      # Formulario para convenios
-│   └── logo_avanta_principal.png       # Logo de Avanta
-│
-├── n8n/                                # Workflow de automatización
-│   └── workflow_convenio.json          # Importar en n8n
-│
-└── api/                                # API para generar PDFs
-    ├── generar-convenio.js             # Código de la API
-    └── package.json                    # Dependencias
-```
-
-## 🚀 Inicio Rápido
-
-### 1. Formulario Web
+### Opción 1: Servidor Web Propio
 
 ```bash
-# Sube los archivos de la carpeta 'formulario/' a tu servidor web
-# Edita formulario/index.html línea 428:
-const N8N_WEBHOOK_URL = "https://tu-n8n.app.n8n.cloud/webhook/convenio-avanta";
+# Sube ambos archivos a tu servidor web
+# Por ejemplo, en un hosting con cPanel:
+# 1. Accede a "Administrador de archivos"
+# 2. Ve a public_html/
+# 3. Crea una carpeta "convenios/"
+# 4. Sube index.html y logo_avanta_principal.png
 ```
 
-### 2. Workflow n8n
+### Opción 2: GitHub Pages (Gratis)
 
 ```bash
-# En n8n:
-1. Workflows → Import from File
-2. Selecciona: n8n/workflow_convenio.json
-3. Configura credenciales SMTP
-4. Activa el workflow
-5. Copia la URL del webhook al formulario
+# 1. Crea un nuevo repositorio en GitHub
+# 2. Sube estos archivos
+# 3. Ve a Settings → Pages
+# 4. Selecciona la rama "main" y carpeta "/root"
+# 5. Tu formulario estará en: https://tu-usuario.github.io/repo-name/formulario/index.html
 ```
 
-### 3. API de PDFs
+### Opción 3: Netlify/Vercel (Gratis)
 
 ```bash
-cd api/
-npm install
-npm start
-
-# O con PM2:
-pm2 start generar-convenio.js --name convenios-api
+# Arrastra toda la carpeta "formulario" a:
+# - Netlify Drop: https://app.netlify.com/drop
+# - Vercel: https://vercel.com/new
 ```
 
-## 🔄 Flujo del Sistema
+## ⚙️ Configuración
 
-```
-Usuario completa formulario
-         ↓
-n8n recibe y valida datos
-         ↓
-API genera convenio PDF
-         ↓
-n8n envía emails automáticos
-         ↓
-✅ Confirmación al usuario
+### Paso 1: Editar la URL del Webhook
+
+Abre `index.html` en un editor de texto y busca la línea 428:
+
+```javascript
+const N8N_WEBHOOK_URL = "https://TU_INSTANCIA_N8N.app.n8n.cloud/webhook/convenio-avanta";
 ```
 
-## 📧 Configuración de Email
+Reemplázala con la URL de tu webhook de n8n.
 
-El sistema envía 2 correos automáticamente:
-- ✅ **Al cliente:** Con el convenio PDF adjunto
-- ✅ **Al equipo comercial:** Notificación de nueva solicitud
+### Paso 2: Subir al servidor
 
-**Configuración SMTP requerida en n8n:**
+Sube los archivos modificados a tu servidor web.
+
+### Paso 3: Probar
+
+Accede a tu formulario en el navegador:
 ```
-Host: smtp.gmail.com
-Port: 587
-Email: comercial@avantahotel.com.mx
-Password: [App Password]
-```
-
-[Cómo obtener App Password de Gmail →](https://support.google.com/accounts/answer/185833)
-
-## 🛠️ Requisitos
-
-- Servidor web (para el formulario)
-- Cuenta de n8n (cloud o self-hosted)
-- Node.js 14+ (para la API de PDFs)
-- Cuenta SMTP (Gmail, Office365, etc.)
-
-## 📖 Documentación
-
-- [📘 Guía Completa](GUIA_COMPLETA.md) - Instalación paso a paso detallada
-- [🔧 Configuración de n8n](n8n/) - Detalles del workflow
-- [📄 API de PDFs](api/) - Personalización de convenios
-
-## 🧪 Prueba Rápida
-
-```bash
-curl -X POST https://tu-webhook-n8n \
-  -H "Content-Type: application/json" \
-  -d '{
-    "cliente": {
-      "nombre": "Juan",
-      "apellidos": "Pérez",
-      "email": "test@empresa.com",
-      "telefono": "+52 55 1234 5678",
-      "empresa": "Empresa Test"
-    }
-  }'
+https://tu-dominio.com/convenios/index.html
 ```
 
-## ✨ Características
+## 🎨 Personalización
 
-- ✅ Formulario web profesional y responsive
-- ✅ Validación automática de datos
-- ✅ Normalización de nombres, emails y teléfonos
-- ✅ Generación de número único de convenio
-- ✅ PDF personalizado con logo y datos
-- ✅ Envío automático de emails HTML
-- ✅ Notificación al equipo comercial
-- ✅ Confirmación visual al usuario
+### Cambiar colores
 
-## 🔧 Personalización
+En `index.html`, busca las variables CSS (líneas 30-37):
 
-### Modificar el diseño del formulario
-Edita `formulario/index.html`
+```css
+:root {
+  --green: #7FA44A;        /* Color principal */
+  --green-dark: #5F7F34;   /* Color hover */
+  --text: #1F2933;         /* Color de texto */
+  /* ... */
+}
+```
 
-### Cambiar el contenido del PDF
-Edita `api/generar-convenio.js` (líneas 50-200)
+### Modificar textos
 
-### Modificar los emails
-Edita los nodos de email en n8n
+Busca las secciones:
+- Línea 450: Título del panel izquierdo
+- Línea 470: Título del formulario
+- Línea 471: Subtítulo
 
-## 📞 Soporte
+### Añadir campos
+
+1. Copia un `<div class="form-group">` existente
+2. Pégalo donde quieras el nuevo campo
+3. Modifica el `name`, `label` y `placeholder`
+4. Añade el campo al objeto `data` en el script (línea 560)
+
+## 📱 Responsive
+
+El formulario es completamente responsive y se adapta a:
+- ✅ Desktop (1200px+)
+- ✅ Tablet (768px - 1199px)
+- ✅ Móvil (320px - 767px)
+
+## 🔒 Seguridad
+
+El formulario incluye:
+- ✅ Validación HTML5 en todos los campos
+- ✅ Sanitización básica de datos
+- ✅ HTTPS recomendado para producción
+- ✅ Checkbox de términos y condiciones
+
+## 🐛 Solución de Problemas
+
+### El formulario no envía
+
+1. **Abre la consola del navegador** (F12 → Console)
+2. **Busca errores en rojo**
+3. **Verifica la URL del webhook** esté correcta
+4. **Comprueba que n8n esté activo**
+
+### Error de CORS
+
+Si ves este error en la consola:
+```
+Access to fetch at '...' has been blocked by CORS policy
+```
+
+**Solución:** Configura CORS en tu servidor n8n o añade estas cabeceras en tu servidor web.
+
+### El logo no se muestra
+
+1. **Verifica que `logo_avanta_principal.png` esté en la misma carpeta**
+2. **Comprueba que el nombre del archivo sea exacto** (respeta mayúsculas/minúsculas)
+3. **Revisa la ruta en el HTML** (línea 464)
+
+## 📊 Analítica (Opcional)
+
+Para añadir Google Analytics:
+
+```html
+<!-- Antes de </head> -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=TU-ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'TU-ID');
+</script>
+```
+
+## 📞 Contacto
+
+Si tienes problemas con el formulario:
 
 **Avanta Hotel & Villas**  
 📧 comercial@avantahotel.com.mx  
 👤 Ricardo Peña - Ejecutivo Comercial
 
-## 📝 Notas
-
-- El sistema genera un número único para cada convenio
-- Los convenios tienen vigencia de 12 meses
-- Se guardan en el directorio `api/convenios/`
-- Los emails se envían automáticamente tras la validación
-
 ---
 
-**Versión:** 1.0  
-**Última actualización:** Enero 2025
-
-## 🌟 Demo
-
-**Formulario:** [Ver captura del formulario →](formulario/)
-
-![Formulario de Convenios](https://via.placeholder.com/800x500?text=Captura+del+Formulario)
-
----
-
-⭐ Si este proyecto te es útil, considera darle una estrella en GitHub
+[← Volver al README principal](../README.md)
