@@ -1,172 +1,453 @@
-# Sistema de Convenios Automatizado - Avanta Hotel & Villas
+# API de Generación de Convenios PDF
 
-Sistema completo para gestionar solicitudes de convenios empresariales con generación automática de PDFs y envío por correo electrónico.
+## 📄 Descripción
 
-![Avanta Hotel & Villas](formulario/logo_avanta_principal.png)
+API Node.js que genera convenios personalizados en formato PDF usando PDFKit.
 
-## 🎯 ¿Qué hace este sistema?
+## 🚀 Instalación
 
-1. **Formulario web** donde las empresas solicitan convenios
-2. **Validación automática** de datos con n8n
-3. **Generación de PDF** del convenio personalizado
-4. **Envío automático** por email al cliente y equipo comercial
+### Requisitos
 
-## 📂 Estructura del Proyecto
+- Node.js 14 o superior
+- npm o yarn
 
-```
-Formulario_Convenio/
-├── README.md                           # Este archivo
-├── GUIA_COMPLETA.md                    # Documentación detallada
-│
-├── formulario/                         # Formulario web
-│   ├── index.html                      # Formulario para convenios
-│   └── logo_avanta_principal.png       # Logo de Avanta
-│
-├── n8n/                                # Workflow de automatización
-│   └── workflow_convenio.json          # Importar en n8n
-│
-└── api/                                # API para generar PDFs
-    ├── generar-convenio.js             # Código de la API
-    └── package.json                    # Dependencias
-```
-
-## 🚀 Inicio Rápido
-
-### 1. Formulario Web
-
-```bash
-# Sube los archivos de la carpeta 'formulario/' a tu servidor web
-# Edita formulario/index.html línea 428:
-const N8N_WEBHOOK_URL = "https://tu-n8n.app.n8n.cloud/webhook/convenio-avanta";
-```
-
-### 2. Workflow n8n
-
-```bash
-# En n8n:
-1. Workflows → Import from File
-2. Selecciona: n8n/workflow_convenio.json
-3. Configura credenciales SMTP
-4. Activa el workflow
-5. Copia la URL del webhook al formulario
-```
-
-### 3. API de PDFs
+### Paso 1: Instalar dependencias
 
 ```bash
 cd api/
 npm install
-npm start
-
-# O con PM2:
-pm2 start generar-convenio.js --name convenios-api
 ```
 
-## 🔄 Flujo del Sistema
+Esto instalará:
+- `express` - Framework web
+- `pdfkit` - Generador de PDFs
+- `cors` - Manejo de CORS
 
-```
-Usuario completa formulario
-         ↓
-n8n recibe y valida datos
-         ↓
-API genera convenio PDF
-         ↓
-n8n envía emails automáticos
-         ↓
-✅ Confirmación al usuario
-```
+### Paso 2: Configurar (opcional)
 
-## 📧 Configuración de Email
+Puedes modificar el puerto en `generar-convenio.js`:
 
-El sistema envía 2 correos automáticamente:
-- ✅ **Al cliente:** Con el convenio PDF adjunto
-- ✅ **Al equipo comercial:** Notificación de nueva solicitud
-
-**Configuración SMTP requerida en n8n:**
-```
-Host: smtp.gmail.com
-Port: 587
-Email: comercial@avantahotel.com.mx
-Password: [App Password]
+```javascript
+const PORT = process.env.PORT || 3000;
 ```
 
-[Cómo obtener App Password de Gmail →](https://support.google.com/accounts/answer/185833)
-
-## 🛠️ Requisitos
-
-- Servidor web (para el formulario)
-- Cuenta de n8n (cloud o self-hosted)
-- Node.js 14+ (para la API de PDFs)
-- Cuenta SMTP (Gmail, Office365, etc.)
-
-## 📖 Documentación
-
-- [📘 Guía Completa](GUIA_COMPLETA.md) - Instalación paso a paso detallada
-- [🔧 Configuración de n8n](n8n/) - Detalles del workflow
-- [📄 API de PDFs](api/) - Personalización de convenios
-
-## 🧪 Prueba Rápida
+O usar una variable de entorno:
 
 ```bash
-curl -X POST https://tu-webhook-n8n \
+export PORT=8080
+```
+
+### Paso 3: Iniciar la API
+
+**Modo desarrollo:**
+```bash
+npm run dev
+```
+
+**Modo producción:**
+```bash
+npm start
+```
+
+**Con PM2 (recomendado para producción):**
+```bash
+# Instalar PM2
+npm install -g pm2
+
+# Iniciar
+npm run pm2:start
+
+# Ver logs
+npm run pm2:logs
+
+# Reiniciar
+npm run pm2:restart
+
+# Detener
+npm run pm2:stop
+```
+
+## 🔌 Endpoints
+
+### POST /generar-convenio
+
+Genera un convenio en PDF.
+
+**Request:**
+```json
+{
+  "numeroConvenio": "CNV-1705488600000",
+  "cliente": {
+    "nombre": "Juan",
+    "apellidos": "Pérez",
+    "nombreCompleto": "Juan Pérez",
+    "email": "juan@empresa.com",
+    "telefono": "+52 55 1234 5678",
+    "empresa": "Empresa ABC",
+    "empresaNormalizada": "EMPRESA ABC"
+  },
+  "fecha": "2025-01-17"
+}
+```
+
+**Response exitosa:**
+```json
+{
+  "success": true,
+  "message": "Convenio generado exitosamente",
+  "numeroConvenio": "CNV-1705488600000",
+  "fileName": "Convenio_CNV-1705488600000_EMPRESA_ABC.pdf",
+  "filePath": "/ruta/completa/convenios/Convenio_CNV-1705488600000_EMPRESA_ABC.pdf",
+  "pdfUrl": "https://tu-servidor.com/convenios/Convenio_CNV-1705488600000_EMPRESA_ABC.pdf",
+  "cliente": { /* datos del cliente */ }
+}
+```
+
+**Response error:**
+```json
+{
+  "error": "Faltan datos requeridos",
+  "required": ["numeroConvenio", "cliente", "fecha"]
+}
+```
+
+### GET /convenios/:filename
+
+Sirve un PDF generado.
+
+**Ejemplo:**
+```
+GET https://tu-api.com/convenios/Convenio_CNV-1705488600000_EMPRESA_ABC.pdf
+```
+
+## 🧪 Pruebas
+
+### Probar con curl:
+
+```bash
+curl -X POST http://localhost:3000/generar-convenio \
   -H "Content-Type: application/json" \
   -d '{
+    "numeroConvenio": "CNV-TEST-001",
     "cliente": {
       "nombre": "Juan",
       "apellidos": "Pérez",
-      "email": "test@empresa.com",
+      "nombreCompleto": "Juan Pérez",
+      "email": "juan@test.com",
       "telefono": "+52 55 1234 5678",
-      "empresa": "Empresa Test"
-    }
+      "empresa": "Empresa Test",
+      "empresaNormalizada": "EMPRESA TEST"
+    },
+    "fecha": "2025-01-17"
   }'
 ```
 
-## ✨ Características
+### Probar con Postman:
 
-- ✅ Formulario web profesional y responsive
-- ✅ Validación automática de datos
-- ✅ Normalización de nombres, emails y teléfonos
-- ✅ Generación de número único de convenio
-- ✅ PDF personalizado con logo y datos
-- ✅ Envío automático de emails HTML
-- ✅ Notificación al equipo comercial
-- ✅ Confirmación visual al usuario
+1. Crea una nueva request POST
+2. URL: `http://localhost:3000/generar-convenio`
+3. Headers: `Content-Type: application/json`
+4. Body: Copia el JSON de arriba
+5. Send
 
-## 🔧 Personalización
+### Ver el PDF generado:
 
-### Modificar el diseño del formulario
-Edita `formulario/index.html`
+```bash
+# Listar PDFs generados
+ls -la convenios/
 
-### Cambiar el contenido del PDF
-Edita `api/generar-convenio.js` (líneas 50-200)
+# Abrir un PDF
+open convenios/Convenio_CNV-TEST-001_EMPRESA_TEST.pdf
+```
 
-### Modificar los emails
-Edita los nodos de email en n8n
+## 🎨 Personalización del PDF
+
+### Estructura del PDF
+
+El convenio incluye:
+
+1. **Encabezado**
+   - Logo de Avanta (opcional)
+   - Título "CONVENIO EMPRESARIAL"
+   - Número de convenio y fecha
+
+2. **Datos de la Empresa**
+   - Razón social
+   - Representante legal
+   - Email corporativo
+   - Teléfono
+
+3. **Objeto del Convenio**
+   - Descripción del propósito
+
+4. **Beneficios y Condiciones**
+   - Lista de 8 beneficios corporativos
+
+5. **Condiciones Generales**
+   - 5 términos principales
+
+6. **Vigencia**
+   - Fechas de inicio y fin (12 meses)
+
+7. **Firmas**
+   - Espacio para firma del cliente
+   - Espacio para firma de Avanta
+
+8. **Footer**
+   - Información de contacto
+
+### Modificar el diseño
+
+Edita `generar-convenio.js` en las siguientes secciones:
+
+**Colores:**
+```javascript
+// Línea ~50
+doc.fillColor('#7FA44A')  // Verde Avanta
+doc.fillColor('#000000')  // Negro para texto
+doc.fillColor('#666666')  // Gris para subtítulos
+```
+
+**Tipografía:**
+```javascript
+// Tamaños de fuente
+doc.fontSize(24)  // Títulos principales
+doc.fontSize(14)  // Subtítulos
+doc.fontSize(11)  // Texto normal
+```
+
+**Añadir logo:**
+```javascript
+// Línea ~52
+doc.image('logo_avanta.png', 50, 45, { width: 100 });
+```
+
+**Modificar beneficios:**
+```javascript
+// Línea ~120
+const beneficios = [
+  'Tu nuevo beneficio aquí',
+  'Otro beneficio personalizado',
+  // ... más beneficios
+];
+```
+
+### Cambiar el nombre del archivo
+
+```javascript
+// Línea ~40
+const fileName = `Convenio_${numeroConvenio}_${cliente.empresaNormalizada}.pdf`;
+```
+
+Puedes cambiarlo a:
+```javascript
+const fileName = `${cliente.empresaNormalizada}_Convenio_${fecha}.pdf`;
+```
+
+## 🌐 Despliegue
+
+### Opción 1: VPS (Digital Ocean, Linode, AWS EC2)
+
+```bash
+# Conectar por SSH
+ssh usuario@tu-servidor.com
+
+# Clonar el repositorio
+git clone https://github.com/tu-usuario/convenios-avanta.git
+cd convenios-avanta/api
+
+# Instalar dependencias
+npm install
+
+# Iniciar con PM2
+pm2 start generar-convenio.js --name convenios-api
+pm2 startup
+pm2 save
+```
+
+### Opción 2: Heroku
+
+```bash
+# Instalar Heroku CLI
+# https://devcenter.heroku.com/articles/heroku-cli
+
+# Login
+heroku login
+
+# Crear app
+heroku create avanta-convenios-api
+
+# Desplegar
+git push heroku main
+
+# Ver logs
+heroku logs --tail
+```
+
+### Opción 3: Vercel
+
+1. Instala Vercel CLI: `npm i -g vercel`
+2. En la carpeta `api/`: `vercel`
+3. Sigue las instrucciones
+
+### Opción 4: Railway
+
+1. Ve a https://railway.app
+2. "New Project" → "Deploy from GitHub"
+3. Selecciona tu repositorio
+4. Railway detectará Node.js automáticamente
+
+## 🔐 Seguridad
+
+### Añadir autenticación
+
+Edita `generar-convenio.js`:
+
+```javascript
+// Middleware de autenticación
+app.use((req, res, next) => {
+  const apiKey = req.headers['x-api-key'];
+  
+  if (apiKey !== process.env.API_KEY) {
+    return res.status(401).json({ error: 'No autorizado' });
+  }
+  
+  next();
+});
+```
+
+Luego en n8n, añade el header:
+```
+X-API-Key: tu-clave-secreta
+```
+
+### Variables de entorno
+
+Crea un archivo `.env`:
+
+```bash
+PORT=3000
+API_KEY=tu-clave-secreta-aqui
+PDF_STORAGE_PATH=/ruta/donde/guardar/pdfs
+BASE_URL=https://tu-dominio.com
+```
+
+Instala dotenv:
+```bash
+npm install dotenv
+```
+
+Y úsalo en el código:
+```javascript
+require('dotenv').config();
+const PORT = process.env.PORT || 3000;
+```
+
+## 🔧 Nginx como Proxy Reverso
+
+Si usas Nginx:
+
+```nginx
+server {
+    listen 80;
+    server_name api.avantahotel.com.mx;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_cache_bypass $http_upgrade;
+    }
+
+    location /convenios {
+        alias /ruta/completa/a/convenios;
+        autoindex off;
+    }
+}
+```
+
+## 📊 Monitoreo
+
+### Ver logs con PM2
+
+```bash
+pm2 logs convenios-api
+pm2 logs convenios-api --lines 100
+```
+
+### Monitoreo en tiempo real
+
+```bash
+pm2 monit
+```
+
+### Estadísticas
+
+```bash
+pm2 status
+```
+
+## 🐛 Solución de Problemas
+
+### Error: Cannot find module 'pdfkit'
+
+```bash
+npm install pdfkit --save
+```
+
+### Error: ENOENT: no such file or directory
+
+La carpeta `convenios/` no existe:
+
+```bash
+mkdir convenios
+chmod 755 convenios
+```
+
+### Error: Port 3000 already in use
+
+Cambia el puerto:
+
+```bash
+PORT=8080 npm start
+```
+
+O detén el proceso que usa el puerto:
+
+```bash
+lsof -i :3000
+kill -9 [PID]
+```
+
+### PDFs corruptos
+
+Verifica que:
+1. ✅ PDFKit esté correctamente instalado
+2. ✅ El directorio `convenios/` tenga permisos de escritura
+3. ✅ El método `doc.end()` se ejecute
+
+## 📦 Dependencias
+
+```json
+{
+  "express": "^4.18.2",    // Framework web
+  "pdfkit": "^0.13.0",     // Generador de PDFs
+  "cors": "^2.8.5"         // Manejo de CORS
+}
+```
 
 ## 📞 Soporte
 
-**Avanta Hotel & Villas**  
-📧 comercial@avantahotel.com.mx  
-👤 Ricardo Peña - Ejecutivo Comercial
+Para problemas con la API:
 
-## 📝 Notas
-
-- El sistema genera un número único para cada convenio
-- Los convenios tienen vigencia de 12 meses
-- Se guardan en el directorio `api/convenios/`
-- Los emails se envían automáticamente tras la validación
+- 📧 comercial@avantahotel.com.mx
+- 📖 [Documentación de PDFKit](https://pdfkit.org/docs/getting_started.html)
+- 📖 [Documentación de Express](https://expressjs.com/)
 
 ---
 
-**Versión:** 1.0  
-**Última actualización:** Enero 2025
-
-## 🌟 Demo
-
-**Formulario:** [Ver captura del formulario →](formulario/)
-
-![Formulario de Convenios](https://via.placeholder.com/800x500?text=Captura+del+Formulario)
-
----
-
-⭐ Si este proyecto te es útil, considera darle una estrella en GitHub
+[← Volver al README principal](../README.md)

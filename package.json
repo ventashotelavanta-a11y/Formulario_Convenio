@@ -1,0 +1,33 @@
+{
+  "name": "avanta-convenios-api",
+  "version": "1.0.0",
+  "description": "API para generar convenios PDF de Avanta Hotel & Villas",
+  "main": "api-generar-convenio.js",
+  "scripts": {
+    "start": "node api-generar-convenio.js",
+    "dev": "nodemon api-generar-convenio.js",
+    "pm2:start": "pm2 start api-generar-convenio.js --name convenios-api",
+    "pm2:stop": "pm2 stop convenios-api",
+    "pm2:restart": "pm2 restart convenios-api",
+    "pm2:logs": "pm2 logs convenios-api"
+  },
+  "keywords": [
+    "pdf",
+    "convenios",
+    "avanta",
+    "hotel"
+  ],
+  "author": "Avanta Hotel & Villas",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "pdfkit": "^0.13.0",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
