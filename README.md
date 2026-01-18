@@ -1,322 +1,154 @@
-# Workflow n8n - Sistema de Convenios
+# Formulario de Convenios - Avanta Hotel & Villas
 
-## 📋 ¿Qué hace este workflow?
+## 📁 Archivos en esta carpeta
 
-Este workflow de n8n automatiza todo el proceso de convenios:
+- `index.html` - Formulario web para solicitudes de convenio
+- `logo_avanta_principal.png` - Logo oficial de Avanta
 
-1. ✅ Recibe datos del formulario web
-2. ✅ Normaliza y valida la información
-3. ✅ Genera el convenio en PDF
-4. ✅ Envía emails automáticos
-5. ✅ Notifica al equipo comercial
+## 🚀 Instalación
 
-## 📦 Importar el Workflow
+### Opción 1: Servidor Web Propio
 
-### Paso 1: Acceder a n8n
-
-Ve a tu instancia de n8n:
-- **n8n Cloud:** https://app.n8n.cloud
-- **Self-hosted:** Tu URL personalizada
-
-### Paso 2: Importar
-
-1. Haz clic en **"+"** para crear un nuevo workflow
-2. Haz clic en el menú **"⋮"** (esquina superior derecha)
-3. Selecciona **"Import from File"**
-4. Selecciona `workflow_convenio.json`
-5. El workflow se cargará con todos los nodos
-
-### Paso 3: Revisar los nodos
-
-El workflow incluye estos nodos:
-
+```bash
+# Sube ambos archivos a tu servidor web
+# Por ejemplo, en un hosting con cPanel:
+# 1. Accede a "Administrador de archivos"
+# 2. Ve a public_html/
+# 3. Crea una carpeta "convenios/"
+# 4. Sube index.html y logo_avanta_principal.png
 ```
-1. Webhook - Recibir Formulario
-2. Normalizar y Validar Datos (Code)
-3. Validar Datos (IF)
-4. Generar Convenio PDF (HTTP Request)
-5. Enviar Email con Convenio
-6. Notificar a Equipo Comercial
-7. Respuesta al Webhook
-8. Respuesta Error
+
+### Opción 2: GitHub Pages (Gratis)
+
+```bash
+# 1. Crea un nuevo repositorio en GitHub
+# 2. Sube estos archivos
+# 3. Ve a Settings → Pages
+# 4. Selecciona la rama "main" y carpeta "/root"
+# 5. Tu formulario estará en: https://tu-usuario.github.io/repo-name/formulario/index.html
+```
+
+### Opción 3: Netlify/Vercel (Gratis)
+
+```bash
+# Arrastra toda la carpeta "formulario" a:
+# - Netlify Drop: https://app.netlify.com/drop
+# - Vercel: https://vercel.com/new
 ```
 
 ## ⚙️ Configuración
 
-### 1. Configurar el Webhook
+### Paso 1: Editar la URL del Webhook
 
-**Nodo:** "Webhook - Recibir Formulario"
+Abre `index.html` en un editor de texto y busca la línea 428:
 
-1. Haz clic en el nodo
-2. Copia la **"Production URL"**
-3. Pégala en el formulario HTML (línea 428)
-
-**Ejemplo de URL:**
-```
-https://tu-usuario.app.n8n.cloud/webhook/convenio-avanta
+```javascript
+const N8N_WEBHOOK_URL = "https://TU_INSTANCIA_N8N.app.n8n.cloud/webhook/convenio-avanta";
 ```
 
-### 2. Configurar Credenciales SMTP
+Reemplázala con la URL de tu webhook de n8n.
 
-**Nodos:** "Enviar Email con Convenio" y "Notificar a Equipo Comercial"
+### Paso 2: Subir al servidor
 
-#### Opción A: Gmail
+Sube los archivos modificados a tu servidor web.
 
-1. Ve a **Credentials** en n8n
-2. Click en **"+ New Credential"**
-3. Selecciona **"SMTP"**
-4. Configura:
-   ```
-   Name: SMTP - Avanta
-   Host: smtp.gmail.com
-   Port: 587
-   Security: TLS
-   User: comercial@avantahotel.com.mx
-   Password: [App Password de 16 caracteres]
-   ```
+### Paso 3: Probar
 
-**Cómo obtener App Password:**
-1. Ve a https://myaccount.google.com/security
-2. Activa "Verificación en 2 pasos"
-3. Busca "Contraseñas de aplicaciones"
-4. Genera nueva → Selecciona "Correo" y "Otro"
-5. Copia la contraseña de 16 caracteres (sin espacios)
-
-#### Opción B: Office 365
-
+Accede a tu formulario en el navegador:
 ```
-Host: smtp.office365.com
-Port: 587
-User: comercial@avantahotel.com.mx
-Password: [tu contraseña normal]
+https://tu-dominio.com/convenios/index.html
 ```
 
-#### Opción C: Servidor SMTP propio
+## 🎨 Personalización
 
-Contacta a tu proveedor de hosting para obtener:
-- Host SMTP
-- Puerto (normalmente 587 o 465)
-- Usuario y contraseña
+### Cambiar colores
 
-### 3. Configurar la API de PDF
+En `index.html`, busca las variables CSS (líneas 30-37):
 
-**Nodo:** "Generar Convenio PDF"
-
-1. Haz clic en el nodo
-2. Busca el campo **"URL"**
-3. Cambia:
-   ```
-   https://TU_API_CONVENIOS/generar-convenio
-   ```
-   Por tu URL real, ejemplo:
-   ```
-   https://api.avantahotel.com.mx/generar-convenio
-   ```
-
-### 4. Activar el Workflow
-
-1. Haz clic en el **switch "Inactive/Active"** (esquina superior derecha)
-2. El workflow ahora está escuchando
-
-## 🧪 Probar el Workflow
-
-### Prueba Manual
-
-1. Haz clic en el nodo **"Webhook - Recibir Formulario"**
-2. Click en **"Listen for Test Event"**
-3. Envía una prueba desde el formulario o usa curl:
-
-```bash
-curl -X POST https://tu-webhook-url \
-  -H "Content-Type: application/json" \
-  -d '{
-    "timestamp": "2025-01-17T10:30:00.000Z",
-    "cliente": {
-      "nombre": "Juan",
-      "apellidos": "Pérez",
-      "nombreCompleto": "Juan Pérez",
-      "email": "test@empresa.com",
-      "telefono": "+52 55 1234 5678",
-      "empresa": "Empresa Test"
-    },
-    "origen": "formulario_web",
-    "estado": "pendiente"
-  }'
-```
-
-4. Verifica que cada nodo se ejecute correctamente
-5. Revisa los datos que fluyen entre nodos
-
-### Ver Ejecuciones
-
-1. Ve a la pestaña **"Executions"** (parte superior)
-2. Aquí verás todas las ejecuciones del workflow
-3. Click en cualquiera para ver detalles
-4. Las exitosas aparecen en **verde** ✅
-5. Las fallidas aparecen en **rojo** ❌
-
-## 📊 Estructura de Datos
-
-### Entrada (del formulario):
-
-```json
-{
-  "timestamp": "2025-01-17T10:30:00.000Z",
-  "cliente": {
-    "nombre": "juan",
-    "apellidos": "pérez",
-    "email": "JUAN@EMPRESA.COM",
-    "telefono": "+52 (55) 1234-5678",
-    "empresa": "Empresa ABC"
-  },
-  "origen": "formulario_web",
-  "estado": "pendiente"
+```css
+:root {
+  --green: #7FA44A;        /* Color principal */
+  --green-dark: #5F7F34;   /* Color hover */
+  --text: #1F2933;         /* Color de texto */
+  /* ... */
 }
 ```
 
-### Salida (normalizada):
+### Modificar textos
 
-```json
-{
-  "cliente": {
-    "nombre": "Juan",
-    "apellidos": "Pérez",
-    "nombreCompleto": "Juan Pérez",
-    "email": "juan@empresa.com",
-    "emailValido": true,
-    "telefono": "+5255123456678",
-    "empresa": "Empresa ABC",
-    "empresaNormalizada": "EMPRESA ABC"
-  },
-  "convenio": {
-    "numeroConvenio": "CNV-1705488600000",
-    "fecha": "17/01/2025",
-    "fechaISO": "2025-01-17",
-    "estado": "generado"
-  },
-  "validacion": {
-    "datosCompletos": true,
-    "emailValido": true
-  }
-}
-```
+Busca las secciones:
+- Línea 450: Título del panel izquierdo
+- Línea 470: Título del formulario
+- Línea 471: Subtítulo
 
-## 🔧 Personalización
+### Añadir campos
 
-### Modificar la validación
+1. Copia un `<div class="form-group">` existente
+2. Pégalo donde quieras el nuevo campo
+3. Modifica el `name`, `label` y `placeholder`
+4. Añade el campo al objeto `data` en el script (línea 560)
 
-Edita el nodo **"Normalizar y Validar Datos"** para añadir:
-- Validaciones adicionales
-- Campos nuevos
-- Transformaciones de datos
+## 📱 Responsive
 
-### Cambiar el contenido del email
+El formulario es completamente responsive y se adapta a:
+- ✅ Desktop (1200px+)
+- ✅ Tablet (768px - 1199px)
+- ✅ Móvil (320px - 767px)
 
-Edita los nodos de email para modificar:
-- Asunto
-- Contenido HTML
-- Destinatarios
-- Adjuntos
+## 🔒 Seguridad
 
-### Añadir notificaciones
-
-Puedes añadir nodos para notificar vía:
-- **Slack** (n8n-nodes-base.slack)
-- **WhatsApp** (via Twilio)
-- **SMS** (via Twilio)
-- **Discord** (n8n-nodes-base.discord)
+El formulario incluye:
+- ✅ Validación HTML5 en todos los campos
+- ✅ Sanitización básica de datos
+- ✅ HTTPS recomendado para producción
+- ✅ Checkbox de términos y condiciones
 
 ## 🐛 Solución de Problemas
 
-### El webhook no recibe datos
+### El formulario no envía
 
-**Verificaciones:**
-1. ✅ El workflow está **Activo**
-2. ✅ La URL del webhook es correcta
-3. ✅ El formulario está enviando a la URL correcta
-4. ✅ No hay errores de CORS
+1. **Abre la consola del navegador** (F12 → Console)
+2. **Busca errores en rojo**
+3. **Verifica la URL del webhook** esté correcta
+4. **Comprueba que n8n esté activo**
 
-**Solución CORS:**
-En n8n, añade este nodo después del webhook:
-- **Set** node con headers:
-  ```
-  Access-Control-Allow-Origin: *
-  Access-Control-Allow-Methods: POST, OPTIONS
-  ```
+### Error de CORS
 
-### Los emails no se envían
-
-**Verificaciones:**
-1. ✅ Credenciales SMTP correctas
-2. ✅ Puerto correcto (587 para TLS)
-3. ✅ Si es Gmail, usar App Password
-
-**Prueba las credenciales:**
-Crea un workflow simple solo con el nodo de email y envía un test.
-
-### Error en la generación del PDF
-
-**Verificaciones:**
-1. ✅ La API está corriendo
-2. ✅ La URL es accesible desde n8n
-3. ✅ La API devuelve el campo `pdfUrl`
-
-**Revisar respuesta:**
-Haz clic en el nodo "Generar Convenio PDF" después de una ejecución para ver la respuesta de la API.
-
-### Datos no se normalizan correctamente
-
-**Verificación:**
-Revisa el nodo "Normalizar y Validar Datos" y verifica:
-- El código JavaScript
-- Los datos de entrada
-- La salida generada
-
-## 📈 Monitoreo
-
-### Revisar logs
-
-1. Ve a **Executions** en n8n
-2. Filtra por:
-   - ✅ Exitosas
-   - ❌ Fallidas
-   - 📅 Fecha
-
-### Alertas automáticas
-
-Añade un nodo de email al final del workflow (branch de error) para recibir alertas cuando algo falla.
-
-## 🔐 Seguridad
-
-### Recomendaciones:
-
-1. **Usa webhooks con autenticación** (Header Auth)
-2. **No expongas credenciales** en el código
-3. **Usa variables de entorno** para datos sensibles
-4. **Implementa rate limiting** en tu servidor
-5. **Valida todos los inputs** antes de procesarlos
-
-### Añadir autenticación al webhook:
-
-En el nodo Webhook, configura:
+Si ves este error en la consola:
 ```
-Authentication: Header Auth
-Header Name: X-API-Key
-Header Value: tu-clave-secreta-aqui
+Access to fetch at '...' has been blocked by CORS policy
 ```
 
-Luego actualiza el formulario para enviar esta cabecera.
+**Solución:** Configura CORS en tu servidor n8n o añade estas cabeceras en tu servidor web.
 
-## 📞 Soporte
+### El logo no se muestra
 
-Si tienes problemas con n8n:
+1. **Verifica que `logo_avanta_principal.png` esté en la misma carpeta**
+2. **Comprueba que el nombre del archivo sea exacto** (respeta mayúsculas/minúsculas)
+3. **Revisa la ruta en el HTML** (línea 464)
 
-- 📖 [Documentación oficial de n8n](https://docs.n8n.io)
-- 💬 [Foro de la comunidad](https://community.n8n.io)
-- 🐛 [GitHub Issues](https://github.com/n8n-io/n8n/issues)
+## 📊 Analítica (Opcional)
 
-Para soporte específico de Avanta:
-- 📧 comercial@avantahotel.com.mx
+Para añadir Google Analytics:
+
+```html
+<!-- Antes de </head> -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=TU-ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'TU-ID');
+</script>
+```
+
+## 📞 Contacto
+
+Si tienes problemas con el formulario:
+
+**Avanta Hotel & Villas**  
+📧 comercial@avantahotel.com.mx  
+👤 Ricardo Peña - Ejecutivo Comercial
 
 ---
 
