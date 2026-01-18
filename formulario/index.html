@@ -557,15 +557,19 @@ document.getElementById("convenioForm").addEventListener("submit", async functio
   submitBtn.innerHTML = 'Enviando<span class="loading"></span>';
 
   // Preparar datos estructurados para n8n
-  const data = {
-    timestamp: new Date().toISOString(),
-    cliente: {
-      nombre: this.nombre.value.trim(),
-      apellidos: this.apellidos.value.trim(),
-      nombreCompleto: `${this.nombre.value.trim()} ${this.apellidos.value.trim()}`,
-      email: this.email.value.trim().toLowerCase(),
-      telefono: this.telefono.value.trim(),
-      empresa: this.empresa.value.trim()
+ const data = {
+  timestamp: new Date().toISOString(),
+  cliente: {
+    nombre: this.nombre.value.trim(),
+    apellidos: this.apellidos.value.trim(),
+    nombreCompleto: `${this.nombre.value.trim()} ${this.apellidos.value.trim()}`,
+    email: this.email.value.trim().toLowerCase(),
+    telefono: this.telefono.value.trim(),
+    empresa: this.empresa.value.trim()
+  },
+  origen: "formulario_web",
+  estado: "pendiente"
+};
     },
     origen: "formulario_web",
     estado: "pendiente"
