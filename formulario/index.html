@@ -574,7 +574,7 @@ document.getElementById("convenioForm").addEventListener("submit", async functio
   console.log('Enviando datos:', data); // Para depuración
 
   try {
-    const res = await fetch(N8N_WEBHOOK_URL,"https://chatbotventas-n8n.h0w0dc.easypanel.host/webhook-test/convenio-avanta" {
+    const res = await fetch(N8N_WEBHOOK_URL,{
       method: "POST",
       headers: { 
         "Content-Type": "application/json"
