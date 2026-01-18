@@ -543,8 +543,8 @@ button:disabled {
 </div>
 
 <script>
-// CONFIGURACIÓN - Cambia esta URL por tu webhook de n8n
-const N8N_WEBHOOK_URL = "https://TU_INSTANCIA_N8N.app.n8n.cloud/webhook/convenio-avanta";
+// CONFIGURACIÓN - URL del webhook de n8n
+const N8N_WEBHOOK_URL = "https://chatbotventas-n8n.h0w0dc.easypanel.host/prueba-de-webhook/convenio-avanta";
 
 document.getElementById("convenioForm").addEventListener("submit", async function(e) {
   e.preventDefault();
@@ -557,26 +557,24 @@ document.getElementById("convenioForm").addEventListener("submit", async functio
   submitBtn.innerHTML = 'Enviando<span class="loading"></span>';
 
   // Preparar datos estructurados para n8n
- const data = {
-  timestamp: new Date().toISOString(),
-  cliente: {
-    nombre: this.nombre.value.trim(),
-    apellidos: this.apellidos.value.trim(),
-    nombreCompleto: `${this.nombre.value.trim()} ${this.apellidos.value.trim()}`,
-    email: this.email.value.trim().toLowerCase(),
-    telefono: this.telefono.value.trim(),
-    empresa: this.empresa.value.trim()
-  },
-  origen: "formulario_web",
-  estado: "pendiente"
-};
+  const data = {
+    timestamp: new Date().toISOString(),
+    cliente: {
+      nombre: this.nombre.value.trim(),
+      apellidos: this.apellidos.value.trim(),
+      nombreCompleto: `${this.nombre.value.trim()} ${this.apellidos.value.trim()}`,
+      email: this.email.value.trim().toLowerCase(),
+      telefono: this.telefono.value.trim(),
+      empresa: this.empresa.value.trim()
     },
     origen: "formulario_web",
     estado: "pendiente"
   };
 
+  console.log('Enviando datos:', data); // Para depuración
+
   try {
-    const res = await fetch(N8N_WEBHOOK_URLconst N8N_WEBHOOK_URL = "https://chatbotventas-n8n.h0w0dc.easypanel.host/prueba-de-webhook/convenio-avanta";, {
+    const res = await fetch(N8N_WEBHOOK_URL, {
       method: "POST",
       headers: { 
         "Content-Type": "application/json"
@@ -584,26 +582,45 @@ document.getElementById("convenioForm").addEventListener("submit", async functio
       body: JSON.stringify(data)
     });
 
-    if (!res.ok) {
+    console.log('Respuesta status:', res.status); // Para depuración
+
+    // Verificar si la respuesta fue exitosa
+    if (res.ok) {
+      // Intentar leer la respuesta JSON
+      try {
+        const responseData = await res.json();
+        console.log('Respuesta de n8n:', responseData);
+      } catch (jsonError) {
+        console.log('No hay JSON en la respuesta, pero el envío fue exitoso');
+      }
+
+      // Ocultar formulario y mostrar confirmación
+      this.style.display = "none";
+      document.getElementById("success").style.display = "block";
+    } else {
       throw new Error(`Error ${res.status}: ${res.statusText}`);
     }
-
-    const responseData = await res.json();
-    console.log("Respuesta de n8n:", responseData);
-
-    // Ocultar formulario y mostrar confirmación
-    this.style.display = "none";
-    document.getElementById("success").style.display = "block";
     
   } catch (error) {
     console.error('Error al enviar:', error);
-    alert("Hubo un error al enviar el formulario. Por favor, intente nuevamente o contacte directamente a comercial@avantahotel.com.mx");
+    
+    // Mostrar error al usuario
+    alert("Hubo un error al enviar el formulario. Por favor, intente nuevamente o contacte directamente a comercial@avantahotel.com.mx\n\nError: " + error.message);
     
     // Restaurar botón
     submitBtn.disabled = false;
     submitBtn.innerHTML = originalText;
   }
 });
+
+Respond With: JSON
+
+Response Body:
+{
+  "success": true,
+  "message": "Convenio recibido correctamente",
+  "timestamp": "{{ $now.toISO() }}"
+}
 </script>
 
 </body>
