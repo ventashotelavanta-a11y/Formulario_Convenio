@@ -478,12 +478,12 @@ button:disabled {
         <div class="form-row">
           <div class="form-group">
             <label>Nombre</label>
-            <input type="text" name="nombre" placeholder="Ej. Juan" required>
+            <input type="text" name="nombre" placeholder="Ej. Tu Nombre" required>
           </div>
 
           <div class="form-group">
             <label>Apellidos</label>
-            <input type="text" name="apellidos" placeholder="Ej. Pérez" required>
+            <input type="text" name="apellidos" placeholder="Ej. Tus Apellidos" required>
           </div>
         </div>
 
@@ -493,7 +493,7 @@ button:disabled {
         </div>
 
         <div class="form-group">
-          <label>Email corporativo</label>
+          <label>Email</label>
           <input type="email" name="email" placeholder="correo@empresa.com" required>
         </div>
 
@@ -574,7 +574,7 @@ document.getElementById("convenioForm").addEventListener("submit", async functio
   console.log('Enviando datos:', data); // Para depuración
 
   try {
-    const res = await fetch(N8N_WEBHOOK_URL, {
+    const res = await fetch(N8N_WEBHOOK_URL,"https://chatbotventas-n8n.h0w0dc.easypanel.host/webhook-test/convenio-avanta" {
       method: "POST",
       headers: { 
         "Content-Type": "application/json"
