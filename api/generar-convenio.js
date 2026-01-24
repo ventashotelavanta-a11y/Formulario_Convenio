@@ -113,7 +113,7 @@ async function generarPDFConvenio(numeroConvenio, cliente, fecha) {
          .font('Helvetica-Bold')
          .list([
            'Habitación Estándar King: $940.00 por noche.',
-           'Habitación Doble Queen: $1,120.00 por noche.'
+           'Habitación Doble Queen:   $1,120.00 por noche.'
          ], { bulletRadius: 1.5 });
       
       doc.moveDown(1);
@@ -129,7 +129,7 @@ async function generarPDFConvenio(numeroConvenio, cliente, fecha) {
          .font('Helvetica-Bold')
          .list([
            'Habitación Estándar King: $1,130.00 por noche.',
-           'Habitación Doble Queen: $1,670.00 por noche'
+           'Habitación Doble Queen:   $1,670.00 por noche'
          ], { bulletRadius: 1.5 });
       
       doc.moveDown(1.2);
