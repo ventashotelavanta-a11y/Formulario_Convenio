@@ -22,7 +22,7 @@ async function generarPDFConvenio(numeroConvenio, cliente, fecha) {
   return new Promise(async (resolve, reject) => {
     try {
       // URL del logo en GitHub (ACTUALIZA CON TU USUARIO Y REPO)
-      const logoUrl = 'https://raw.githubusercontent.com/ventashotelavanta-a11y/Formulario_Convenio/main/formulario/logo_avanta_principal.png';
+      const logoUrl = 'https://raw.githubusercontent.com/ventashotelavanta-a11y/Formulario_Convenio/api/generar_convenio.js';
       
       // Descargar logo
       let logoBuffer;
