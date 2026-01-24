@@ -1,5 +1,5 @@
 // api/generar-convenio.js
-// API Serverless para generar PDFs de convenios usando PDFKit - Formato Avanta 2026
+// API Serverless para generar PDFs de convenios usando PDFKit - Formato Avanta 2026 ACTUALIZADO
 // Diseñada para Vercel
 
 const PDFDocument = require('pdfkit');
@@ -49,7 +49,7 @@ async function generarPDFConvenio(numeroConvenio, cliente, fecha) {
       });
       doc.on('error', reject);
 
-      // ========== CONTENIDO DEL PDF - FORMATO AVANTA 2026 ==========
+      // ========== CONTENIDO DEL PDF - FORMATO AVANTA 2026 ACTUALIZADO ==========
       
       // Logo (si se pudo descargar)
       if (logoBuffer) {
@@ -67,7 +67,7 @@ async function generarPDFConvenio(numeroConvenio, cliente, fecha) {
       
       doc.moveDown(2.5);
 
-      // Fecha (alineada a la derecha)
+      // Fecha (formato entre paréntesis)
       const fechaFormateada = new Date(fecha).toLocaleDateString('es-MX', {
         year: 'numeric',
         month: 'long',
@@ -75,11 +75,11 @@ async function generarPDFConvenio(numeroConvenio, cliente, fecha) {
       });
       doc.fontSize(10)
          .fillColor('#333')
-         .text(`(${fechaFormateada})`, { align: 'right' });
+         .text(`(${fechaFormateada})`, 60, doc.y);
       
-      doc.moveDown(1);
+      doc.moveDown(1.5);
 
-      // Nombre y Apellidos
+      // Nombre y Apellidos del cliente
       doc.fontSize(11)
          .font('Helvetica-Bold')
          .text(`${cliente.nombre || ''} ${cliente.apellidos || ''}`.trim());
@@ -91,23 +91,23 @@ async function generarPDFConvenio(numeroConvenio, cliente, fecha) {
          .font('Helvetica-Bold')
          .text(`Convenio Avanta con ${cliente.empresa || 'Empresa'}`);
       
-      doc.moveDown(1);
-
-      // Texto introductorio
-      doc.fontSize(10.5)
-         .font('Helvetica')
-         .text(`A continuación, encontrará las tarifas especiales para su ${cliente.empresa || 'empresa'} por parte de Avanta Hotel & Villas`, {
-           align: 'justify'
-         });
-      
       doc.moveDown(1.2);
 
-      // Tarifas sin desayuno
+      // Texto introductorio - FORMATO 2026
+      doc.fontSize(10.5)
+         .font('Helvetica')
+         .text(`A continuación, encontrará las tarifas especiales para su ${cliente.empresa || 'Empresa'} por parte de Avanta Hotel & Villas`, {
+           align: 'left'
+         });
+      
+      doc.moveDown(1.5);
+
+      // ========== TARIFAS SIN DESAYUNO ==========
       doc.fontSize(11)
          .font('Helvetica-Bold')
          .text('Tarifas sin desayuno');
       
-      doc.moveDown(0.3);
+      doc.moveDown(0.5);
 
       doc.fontSize(10)
          .font('Helvetica-Bold')
@@ -116,14 +116,14 @@ async function generarPDFConvenio(numeroConvenio, cliente, fecha) {
            'Habitación Doble Queen: $1,120.00 por noche.'
          ], { bulletRadius: 1.5 });
       
-      doc.moveDown(0.8);
+      doc.moveDown(1);
 
-      // Tarifas con desayuno
+      // ========== TARIFAS CON DESAYUNO - PRECIOS ACTUALIZADOS 2026 ==========
       doc.fontSize(11)
          .font('Helvetica-Bold')
          .text('Tarifas con desayuno Buffet');
       
-      doc.moveDown(0.3);
+      doc.moveDown(0.5);
 
       doc.fontSize(10)
          .font('Helvetica-Bold')
@@ -132,14 +132,14 @@ async function generarPDFConvenio(numeroConvenio, cliente, fecha) {
            'Habitación Doble Queen: $1,670.00 por noche'
          ], { bulletRadius: 1.5 });
       
-      doc.moveDown(1);
+      doc.moveDown(1.2);
 
-      // Ofrecemos servicios de:
+      // ========== SERVICIOS ==========
       doc.fontSize(11)
          .font('Helvetica-Bold')
          .text('Ofrecemos servicios de:');
       
-      doc.moveDown(0.3);
+      doc.moveDown(0.5);
 
       doc.fontSize(10)
          .font('Helvetica')
@@ -149,14 +149,14 @@ async function generarPDFConvenio(numeroConvenio, cliente, fecha) {
            'Estacionamiento gratuito'
          ], { bulletRadius: 1.5 });
       
-      doc.moveDown(1.2);
+      doc.moveDown(1.5);
 
-      // Especificaciones de tarifas convenio
+      // ========== ESPECIFICACIONES ==========
       doc.fontSize(11)
          .font('Helvetica-Bold')
          .text('Especificaciones de tarifas convenio:');
       
-      doc.moveDown(0.5);
+      doc.moveDown(0.6);
 
       doc.fontSize(10)
          .font('Helvetica');
@@ -166,20 +166,20 @@ async function generarPDFConvenio(numeroConvenio, cliente, fecha) {
         indent: 0
       });
       
-      doc.moveDown(0.3);
+      doc.moveDown(0.4);
 
-      // Segunda especificación (en negrita)
+      // Segunda especificación (en negrita) - FORMATO 2026
       doc.font('Helvetica-Bold')
          .text('•  La tarifa convenio está disponible únicamente para reservaciones realizadas directamente con el hotel, a través de nuestro motor de reservaciones con su código de reservaciones', {
            indent: 0,
-           align: 'justify'
+           align: 'left'
          });
       
-      doc.moveDown(0.3);
+      doc.moveDown(0.4);
 
       doc.font('Helvetica');
 
-      // Tercera especificación
+      // Tercera especificación - FORMATO 2026
       doc.text('•  Tarifa vigente al 31 de diciembre de 2026 a partir de ahí el presente convenio continuará ', {
         indent: 0,
         continued: true
@@ -189,23 +189,23 @@ async function generarPDFConvenio(numeroConvenio, cliente, fecha) {
       doc.font('Helvetica')
          .text(' con las respectivas actualizaciones de tarifa y documento');
       
-      doc.moveDown(0.3);
+      doc.moveDown(0.4);
 
       // Cuarta especificación
       doc.text('•  Todas las reservaciones están sujetas a disponibilidad.', {
         indent: 0
       });
 
-      doc.moveDown(1.5);
+      doc.moveDown(2);
 
-      // Despedida
+      // Despedida - FORMATO 2026
       doc.fontSize(10)
          .font('Helvetica')
          .text('Agradezco su atención y quedo a la espera de su respuesta.');
       
-      doc.moveDown(2.5);
+      doc.moveDown(3);
 
-      // Firmas - dos columnas
+      // ========== FIRMAS - DOS COLUMNAS ==========
       const firmaY = doc.y;
       const leftX = 80;
       const rightX = 350;
@@ -284,7 +284,7 @@ module.exports = async (req, res) => {
     // Responder con el PDF en base64
     return res.status(200).json({
       success: true,
-      message: 'Convenio generado exitosamente',
+      message: 'Convenio generado exitosamente - Formato 2026',
       numeroConvenio: numeroConvenio,
       fileName: fileName,
       pdfBase64: pdfBase64,
