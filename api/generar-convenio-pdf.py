@@ -94,9 +94,9 @@ def crear_convenio_pdf(numero_convenio, cliente, fecha):
     
     # Tarifas en negrita
     c.setFont('Helvetica-Bold', 12)
-    c.drawString(80, y, 'Habitación Estándar King:      $   940.00   por noche.')
+    c.drawString(80, y, 'Habitación Estándar King:      $  940.00   por noche.')
     y -= 18
-    c.drawString(80, y, 'Habitación Doble Queen:       $1,120.00   por noche.')
+    c.drawString(80, y, 'Habitación Doble Queen:        $1,120.00   por noche.')
     y -= 25
     
     # ========== TARIFAS CON DESAYUNO (título en negrita según plantilla) ==========
@@ -107,13 +107,13 @@ def crear_convenio_pdf(numero_convenio, cliente, fecha):
     c.setFont('Helvetica-Bold', 12)
     c.drawString(80, y, 'Habitación Estándar King:      $1,130.00     por noche.')
     y -= 18
-    c.drawString(80, y, 'Habitación Doble Queen:       $1,670.00     por noche')
+    c.drawString(80, y, 'Habitación Doble Queen:        $1,670.00     por noche.')
     y -= 25
     
     # ========== SERVICIOS ==========
     c.setFont('Helvetica', 12)
     c.drawString(60, y, 'Ofrecemos servicios de:')
-    y -= 18
+    y -= 25
     
     c.setFont('Helvetica', 12)
     c.drawString(80, y, 'Wi-Fi de alta velocidad Gratis')
@@ -126,7 +126,7 @@ def crear_convenio_pdf(numero_convenio, cliente, fecha):
     # ========== ESPECIFICACIONES ==========
     c.setFont('Helvetica', 12)
     c.drawString(60, y, 'Especificaciones de tarifas convenio:')
-    y -= 18
+    y -= 25
     
     # Especificación 1
     c.setFont('Helvetica', 12)
@@ -143,7 +143,7 @@ def crear_convenio_pdf(numero_convenio, cliente, fecha):
     c.drawString(80, y, esp2_line2)
     y -= 15
     
-    esp2_line3 = 'código de reservaciones'
+    esp2_line3 = 'código promocional en nuestro motore de reserva Codigo: AVANTA'
     c.drawString(80, y, esp2_line3)
     y -= 18
     
@@ -178,7 +178,7 @@ def crear_convenio_pdf(numero_convenio, cliente, fecha):
     
     # ========== DESPEDIDA (corregido el typo de la plantilla) ==========
     c.setFont('Helvetica', 12)
-    c.drawString(60, y, 'Agradezco su atención y quedo a la espera de su respuesta.')
+    c.drawString(60, y, 'Agradezco su amable atención.')
     y -= 60
     
     # ========== FIRMAS (formato de la plantilla con tamaño 13pt) ==========
