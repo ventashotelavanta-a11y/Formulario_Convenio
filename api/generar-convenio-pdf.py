@@ -157,7 +157,7 @@ def crear_convenio_pdf(numero_convenio, cliente, fecha):
     
     esp2_line3 = 'código promocional en nuestro motore de reserva Codigo: AVANTA'
     c.drawString(80, y, esp2_line3)
-    y -= 18
+    y -= 25
     
     # Especificación 3 - ACTUALIZADO según plantilla
     c.setFont('Helvetica', 12)
@@ -182,7 +182,7 @@ def crear_convenio_pdf(numero_convenio, cliente, fecha):
     y -= 15
     
     c.drawString(80, y, 'de tarifa y documento')
-    y -= 18
+    y -= 22
     
     # Especificación 4
     c.drawString(80, y, 'Todas las reservaciones están sujetas a disponibilidad.')
