@@ -43,7 +43,7 @@ def crear_convenio_pdf(numero_convenio, cliente, fecha):
         logo = ImageReader(logo_path)
         
         # Dibujar el logo
-        c.drawImage(logo, 60, y, width=150, height=60, preserveAspectRatio=True, mask='auto')
+        c.drawImage(logo, 60, y - 20, width=150, height=60, preserveAspectRatio=True, mask='auto')
         
         y -= 70  # Ajustar posición Y después del logo
         
