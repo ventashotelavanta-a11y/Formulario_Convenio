@@ -1,8 +1,6 @@
 {
   "name": "convenio-avanta",
-  "version": "1.0.0",
-  "dependencies": {
-    "pdfkit": "^0.15.0",
-    "cors": "^2.8.5"
-  }
+  "version": "2.0.0",
+  "description": "Sistema de convenios con Python",
+  "dependencies": {}
 }
