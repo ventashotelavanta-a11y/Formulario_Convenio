@@ -36,6 +36,7 @@ def crear_convenio_pdf(numero_convenio, cliente, fecha):
     
     y = height - 60  # Posición Y inicial
     
+    # ========== LOGO ==========
     try:
         # Cargar el logo (está en la misma carpeta api/)
         logo_path = os.path.join(os.path.dirname(__file__), 'logo_avanta_principal.png')
@@ -56,6 +57,7 @@ def crear_convenio_pdf(numero_convenio, cliente, fecha):
         c.setFont('Helvetica', 10)
         c.drawString(60, y, 'Hotel & Villas')
         y -= 40
+    
     # ========== FECHA ==========
     fecha_obj = datetime.strptime(fecha, '%Y-%m-%d')
     fecha_formateada = fecha_obj.strftime('%d de %B de %Y')
