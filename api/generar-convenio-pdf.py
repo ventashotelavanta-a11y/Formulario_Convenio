@@ -45,7 +45,31 @@ def crear_convenio_pdf(numero_convenio, cliente, fecha):
     c.drawString(60, y, 'Hotel & Villas')
     
     y -= 40
+    # ========== LOGO (imagen desde URL) ==========
+from reportlab.lib.utils import ImageReader
+
+try:
+    # Cargar el logo desde la ruta
+    logo_path = 'api/logo_avanta_principal.png'
+    logo = ImageReader(logo_path)
     
+    # Dibujar el logo (ajusta el tamaño según necesites)
+    # Los parámetros son: (x, y, ancho, alto)
+    # Ajusta estos valores según el tamaño de tu logo
+    c.drawImage(logo, 60, y - 40, width=150, height=60, preserveAspectRatio=True, mask='auto')
+    
+    y -= 60  # Ajustar posición Y después del logo
+    
+except Exception as e:
+    # Si falla cargar el logo, usar texto como respaldo
+    c.setFillColor(verde_avanta)
+    c.setFont('Helvetica-Bold', 24)
+    c.drawString(60, y, 'AVANTA')
+    y -= 20
+    c.setFillColor(gris)
+    c.setFont('Helvetica', 10)
+    c.drawString(60, y, 'Hotel & Villas')
+    y -= 20
     # ========== FECHA ==========
     fecha_obj = datetime.strptime(fecha, '%Y-%m-%d')
     fecha_formateada = fecha_obj.strftime('%d de %B de %Y')
