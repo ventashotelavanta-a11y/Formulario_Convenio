@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/generar-convenio-pdf.py",
+      "use": "@vercel/python"
+    }
+  ]
+}
