@@ -8,6 +8,7 @@ Diseñada para Vercel
 from http.server import BaseHTTPRequestHandler
 import json
 import base64
+import os
 from datetime import datetime
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
@@ -36,13 +37,12 @@ def crear_convenio_pdf(numero_convenio, cliente, fecha):
     y = height - 60  # Posición Y inicial
     
     # ========== LOGO (texto por ahora - se puede cambiar a imagen) ==========
-    c.setFillColor(verde_avanta)
-   y = height - 60  # Posición Y inicial
+    y = height - 60  # Posición Y inicial
     
-    # ========== LOGO ==========
     try:
-        # Cargar el logo desde la ruta
-        logo_path = 'api/logo_avanta_principal.png'
+        # Cargar el logo (está en la misma carpeta api/)
+        import os
+        logo_path = os.path.join(os.path.dirname(__file__), 'logo_avanta_principal.png')
         logo = ImageReader(logo_path)
         
         # Dibujar el logo
@@ -60,7 +60,6 @@ def crear_convenio_pdf(numero_convenio, cliente, fecha):
         c.setFont('Helvetica', 10)
         c.drawString(60, y, 'Hotel & Villas')
         y -= 40
-    
     # ========== FECHA ==========
     fecha_obj = datetime.strptime(fecha, '%Y-%m-%d')
     # ========== FECHA ==========
