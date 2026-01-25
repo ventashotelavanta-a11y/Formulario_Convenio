@@ -6,7 +6,7 @@ API Node.js que genera convenios personalizados en formato PDF usando PDFKit.
 
 ## 🚀 Instalación
 
-### Requisitos
+### Requisitos 
 
 - Node.js 14 o superior
 - npm o yarn
