@@ -1,7 +1,0 @@
-{
-  "functions": {
-    "api/generar-convenio-pdf.py": {
-      "maxDuration": 30
-    }
-  }
-}
