@@ -4,10 +4,10 @@
   "vigenciaDesde": "2026-01-01",
   "vigenciaHasta": "2026-12-31",
   "tarifas": {
-    "habitacionKingSinDesayuno": 940,
-    "habitacionQueenSinDesayuno": 1120,
-    "habitacionKingConDesayuno": 1130,
-    "habitacionQueenConDesayuno": 1670
+    "habitacionKingSinDesayuno": 800,
+    "habitacionQueenSinDesayuno": 1000,
+    "habitacionKingConDesayuno": 1040,
+    "habitacionQueenConDesayuno": 1480,
   },
   "moneda": "MXN",
   "codigoPromo": "AVANTA",
