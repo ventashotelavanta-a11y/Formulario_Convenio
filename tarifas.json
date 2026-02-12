@@ -1,8 +1,8 @@
 {
-  "version": "2027",
+  "version": "2026",
   "fechaActualizacion": "2026-01-25",
-  "vigenciaDesde": "2027-01-01",
-  "vigenciaHasta": "2027-12-31",
+  "vigenciaDesde": "2026-01-01",
+  "vigenciaHasta": "2026-12-31",
   "tarifas": {
     "habitacionKingSinDesayuno": 940,
     "habitacionQueenSinDesayuno": 1120,
@@ -11,9 +11,9 @@
   },
   "moneda": "MXN",
   "codigoPromo": "AVANTA",
-  "notas": "Tarifas corporativas vigentes para convenios 2027. Actualizar este archivo cada año en noviembre.",
+  "notas": "Tarifas corporativas vigentes para convenios 2026. Actualizar este archivo cada año en noviembre.",
   "instrucciones": {
     "comActualizar": "Edita los 4 números en 'tarifas' y cambia 'version' al nuevo año",
-    "ejemplo": "Para 2028, cambia version a '2028' y actualiza las tarifas con los nuevos montos"
+    "ejemplo": "Para 2027, cambia version a '2027' y actualiza las tarifas con los nuevos montos"
   }
 }
