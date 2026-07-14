@@ -29,6 +29,16 @@ const statusLabel: Record<Status, string> = {
   error: 'Reintentar',
 }
 
+function descargarPdf(base64: string, fileName: string) {
+  const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0))
+  const url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }))
+  const a = document.createElement('a')
+  a.href = url
+  a.download = fileName
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
 export default function ConvenioForm() {
   const [fields, setFields] = useState<Fields>(INITIAL)
   const [status, setStatus] = useState<Status>('idle')
@@ -61,6 +71,7 @@ export default function ConvenioForm() {
       })
       if (!pdfRes.ok) throw new Error(`Error al generar PDF: ${pdfRes.status}`)
       const pdfData = await pdfRes.json()
+      descargarPdf(pdfData.pdfBase64, pdfData.fileName)
 
       setStatus('sending')
       const n8nRes = await fetch(N8N_WEBHOOK_URL, {
