@@ -5,25 +5,31 @@
 
 ## Contexto
 
-Avanta Hotel & Villas presenta sus tarifas a clientes/canales en tablas de Excel/imagen
+Avanta Hotel & Villas presenta sus tarifas a la gerencia del hotel, a su personal, y
+las sube a los diferentes canales de venta para clientes, en tablas de Excel/imagen
 armadas manualmente (ver `AVANTA HOTEL`/capturas). Cada tabla ("módulo") corresponde a
 una tarifa comercial (ej. "Direct Booking Sin Desayuno", "Convenio Avanta Con Desayuno
 Buffet") con precios por tipo de habitación y número de personas. Actualizar precios,
 armar una propuesta de aumento, y llevar historial de años anteriores hoy es 100% manual.
 
 Este spec cubre un dashboard interno ("Matriz de Tarifas") para:
-1. Editar la matriz de tarifas vigente.
+1. Editar la matriz de tarifas vigente — incluyendo agregar canales y tarifas nuevas
+   con un botón "+", no solo editar precios de módulos ya existentes.
 2. Ver/editar una propuesta de aumento (aumento global editable + ajustes por celda).
-3. Publicar una edición (congela valores, exporta el JSON que ya consume
-   `convenios-avanta-2026/api`, y genera un PDF presentable de la propuesta).
+3. Publicar una edición (congela valores y genera los archivos que consumen los repos
+   de cotizadores/convenios — ver "Exportación", más abajo — y un PDF presentable de
+   la propuesta).
 4. Consultar ediciones anteriores (historial de años).
 
 ## Fuera de alcance (YAGNI por ahora)
 
-- Multi-usuario con roles/permisos — un solo usuario (Ricardo) edita.
-- Integración automática con los cotizadores (`cotizacion-avanta`,
-  `cotizacion-sala-nova`) — el JSON exportado queda listo para que esos repos lo
-  consuman como hoy, pero conectarlos es trabajo aparte si se pide.
+- Roles/permisos diferenciados — 2 usuarios (Ricardo e Isabel), mismos permisos para
+  ambos, sin sistema de roles.
+- Push automático (PR/commit) hacia `convenios-avanta-2026` o `cotizacion-avanta` —
+  el dashboard genera los archivos con el formato correcto; colocarlos en el repo y
+  desplegar sigue siendo manual (lo hace Ricardo), como hoy.
+- Cambios a `cotizacion-sala-nova` — es un producto distinto (renta de salón/coffee
+  break), no tiene relación con las tarifas de habitación.
 - Traducción/i18n — español mexicano únicamente.
 
 ## Arquitectura
@@ -38,13 +44,17 @@ Este spec cubre un dashboard interno ("Matriz de Tarifas") para:
 - **Base de datos:** Postgres nuevo (`avanta-db`) en EasyPanel, mismo patrón que
   `promosolution-db`. Es la fuente de verdad; el JSON para `convenios-avanta-2026` se
   genera a partir de ella al publicar una edición, no al revés.
-- **Autenticación:** contraseña única compartida (variable de entorno + cookie de
-  sesión firmada). Proporcional a que hoy solo un usuario administra precios; si más
-  gente necesita editar en el futuro, se puede migrar a OAuth sin rediseñar el resto.
+- **Autenticación:** 2 cuentas fijas (Ricardo, Isabel), mismos permisos, sin sistema de
+  roles — usuario/contraseña simple contra una tabla `usuarios` en Postgres + cookie de
+  sesión firmada. Si se necesitan más cuentas o roles diferenciados a futuro, se agrega
+  sin rediseñar el resto.
 
 ## Modelo de datos (Postgres)
 
 ```
+usuarios               -- 2 filas semilla: Ricardo, Isabel — mismos permisos
+  id, nombre, email, password_hash
+
 ediciones
   id, anio, estado ('borrador' | 'activa' | 'archivada'),
   aumento_default_mxn, fecha_publicacion
@@ -114,11 +124,35 @@ Ricardo tenga los valores.
    "propuesta" lado a lado (como el screenshot original). Campo global de aumento
    (default $80, editable) recalcula `monto_propuesto` de todas las celdas sin override
    manual.
-4. **Publicar edición** — cambia `estado` a `activa`, congela valores, genera:
-   - el `tarifas.json` en el formato que ya lee `convenios-avanta-2026/api`
-   - un PDF de la propuesta (estilo mejorado del screenshot original) vía la función
-     Python/ReportLab
+4. **Publicar edición** — cambia `estado` a `activa`, congela valores, genera los
+   archivos descritos en "Exportación" y un PDF de la propuesta (estilo mejorado del
+   screenshot original) vía la función Python/ReportLab. Ricardo descarga y coloca cada
+   archivo en el repo correspondiente manualmente (sin push automático).
 5. **Historial de ediciones** — lista de años pasados en solo lectura.
+
+## Exportación — consumidores downstream
+
+El dashboard es la fuente de verdad; al publicar una edición genera dos archivos
+distintos, uno por repo consumidor (ambos formatos ya existentes, sin inventar uno
+nuevo):
+
+1. **`tarifas.json`** — formato plano de 6 claves que ya lee
+   `convenios-avanta-2026/api/generar-convenio-pdf.py` (King/Queen × Sin Desayuno/
+   Americano/Buffet). Se arma tomando los módulos "Convenio Avanta Sin Desayuno",
+   "Convenio Avanta Con Desayuno Americano" y "Convenio Avanta Con Desayuno Buffet"
+   (valores de 1-2 pax, que es lo que ese formato usa hoy). Sin cambios de código en
+   ese repo.
+2. **`tarifas-cotizador.json`** — nuevo archivo con la forma anidada que usa
+   `cotizacion-avanta`: `{"Con Convenio": {...}, "Sin Convenio": {...}}` × 3 tipos de
+   desayuno × 4 tipos de habitación × pax 1-5 (pax 5 = pax 4 + persona_extra de esa
+   tarifa/tipo de habitación). Se arma con los 6 módulos "Convenio Avanta X" / "Sin
+   Convenio X" (no incluye los módulos de OTA's, que ese cotizador no usa).
+   - Incluye refactorizar `cotizacion-avanta/api/generar-cotizacion-pdf.py`: reemplazar
+     el diccionario `TARIFAS` hardcodeado por una lectura de este JSON al arrancar la
+     función (mismo patrón try/except con fallback a los valores actuales que ya usa
+     `convenios-avanta-2026/api/generar-convenio-pdf.py`), para que el archivo que
+     coloque Ricardo sí tenga efecto.
+3. **`cotizacion-sala-nova`** — sin cambios, no consume tarifas de habitación.
 
 ## Validación / errores
 
@@ -140,5 +174,9 @@ vista comparativa — no antes, este spec solo define estructura y datos.
 
 - Un test de humo por endpoint API (crear tarifa, editar celda, calcular propuesta con
   aumento_default, publicar edición → JSON generado tiene la forma esperada).
-- Caso límite: tipo de habitación con capacidad 3 no debe generar columna de 4 pax en
-  el JSON exportado.
+- Caso límite: tipo de habitación con capacidad 3 no debe generar columna de 4 pax ni
+  pax 5 en el JSON exportado (solo las 4 con capacidad 5 lo tienen).
+- Test del export `tarifas-cotizador.json`: verificar que pax 5 = pax 4 + persona_extra
+  para cada combinación tarifa × tipo de habitación con capacidad 5.
+- Test de `cotizacion-avanta` tras el refactor: con el JSON presente, el PDF usa esos
+  valores; si el archivo falta, cae a los valores por defecto actuales (sin romper).
