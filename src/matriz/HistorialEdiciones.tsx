@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { api, ApiError } from './api'
+import { api } from './api'
 import type { Tarifa } from './TarifaCard'
 
 interface Edicion {
@@ -44,13 +44,22 @@ export default function HistorialEdiciones() {
       descargar('tarifas.json', tarifasJson)
       descargar('tarifas-cotizador.json', tarifasCotizadorJson)
 
+      // La edición ya quedó publicada y los JSON ya se descargaron en este punto:
+      // refrescar la lista ahora para que no se quede mostrando "borrador" si el
+      // PDF (paso opcional/adicional) falla más abajo.
+      await cargar()
+
       const anio = ediciones.find((e) => e.id === edicionId)?.anio
       const tarifas = await api.get<Tarifa[]>(`/matriz/tarifas?edicionId=${edicionId}`)
-      const pdfResp = await fetch('/api/matriz/generar-pdf-propuesta', {
+      const pdfRes = await fetch('/api/matriz/generar-pdf-propuesta', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ anio, tarifas: tarifas.map((t) => ({ nombre: t.nombre, valores: t.valores })) }),
-      }).then((r) => r.json())
+      })
+      const pdfResp = await pdfRes.json()
+      if (!pdfRes.ok || !pdfResp.success) {
+        throw new Error(pdfResp.error || `Error al generar el PDF de la propuesta: ${pdfRes.status}`)
+      }
       const pdfBlob = new Blob([Uint8Array.from(atob(pdfResp.pdfBase64), (c) => c.charCodeAt(0))], { type: 'application/pdf' })
       const pdfUrl = URL.createObjectURL(pdfBlob)
       const a = document.createElement('a')
@@ -58,10 +67,8 @@ export default function HistorialEdiciones() {
       a.download = `Propuesta_Tarifas_${anio}.pdf`
       a.click()
       URL.revokeObjectURL(pdfUrl)
-
-      await cargar()
     } catch (err) {
-      setError(err instanceof ApiError ? err.message : 'No se pudo publicar la edición')
+      setError(err instanceof Error ? err.message : 'No se pudo publicar la edición')
     } finally {
       setPublicando(null)
     }

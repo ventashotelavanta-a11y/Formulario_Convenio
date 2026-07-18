@@ -39,7 +39,11 @@ def crear_pdf(anio, tarifas):
     y -= 30
 
     for tarifa in tarifas:
-        if y < 120:
+        # Altura real que ocupa este módulo: título + header + una línea por
+        # valor + el espacio final, usando los mismos incrementos que el
+        # dibujado de abajo (16 / 14 / 13 por fila / 10 de cierre).
+        altura_modulo = 16 + 14 + len(tarifa['valores']) * 13 + 10
+        if y - altura_modulo < 60:
             c.showPage()
             y = height - 60
         c.setFont(fuente, 12)
