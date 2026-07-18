@@ -39,10 +39,12 @@ def crear_pdf(anio, tarifas):
     y -= 30
 
     for tarifa in tarifas:
+        persona_extra = tarifa.get('personaExtra', [])
         # Altura real que ocupa este módulo: título + header + una línea por
-        # valor + el espacio final, usando los mismos incrementos que el
-        # dibujado de abajo (16 / 14 / 13 por fila / 10 de cierre).
-        altura_modulo = 16 + 14 + len(tarifa['valores']) * 13 + 10
+        # valor (incluyendo las filas de persona extra, que se dibujan con el
+        # mismo alto de línea más abajo) + el espacio final, usando los mismos
+        # incrementos que el dibujado de abajo (16 / 14 / 13 por fila / 10 de cierre).
+        altura_modulo = 16 + 14 + (len(tarifa['valores']) + len(persona_extra)) * 13 + 10
         if y - altura_modulo < 60:
             c.showPage()
             y = height - 60
@@ -65,6 +67,14 @@ def crear_pdf(anio, tarifas):
             c.drawString(220, y, str(valor['pax']))
             c.drawString(260, y, fmt(valor.get('montoActual')))
             c.drawString(330, y, fmt(valor.get('montoPropuesto')))
+            y -= 13
+
+        for extra in persona_extra:
+            c.setFillColor(NEGRO)
+            c.drawString(60, y, f"Persona extra — {extra['tipoHabitacion']}")
+            c.drawString(220, y, '—')
+            c.drawString(260, y, fmt(extra.get('montoActual')))
+            c.drawString(330, y, fmt(extra.get('montoPropuesto')))
             y -= 13
         y -= 10
 

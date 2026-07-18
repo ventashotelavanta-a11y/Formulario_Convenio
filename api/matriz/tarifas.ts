@@ -54,6 +54,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             pax: v.pax,
             montoActual,
             montoPropuesto: computeMontoPropuesto(montoActual, aumentoDefault, overrideDb),
+            montoPropuestoOverride: overrideDb,
           }
         }),
       // ponytail: same NULL-fallback as `valores` above — el spec dice "todas las celdas
@@ -67,6 +68,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             tipoHabitacion: e.tipo_habitacion,
             montoActual,
             montoPropuesto: computeMontoPropuesto(montoActual, aumentoDefault, overrideDb),
+            montoPropuestoOverride: overrideDb,
           }
         }),
     }))

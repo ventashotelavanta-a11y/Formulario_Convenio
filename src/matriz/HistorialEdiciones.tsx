@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { api } from './api'
+import { api, mensajeError } from './api'
 import type { Tarifa } from './TarifaCard'
 
 interface Edicion {
@@ -54,7 +54,10 @@ export default function HistorialEdiciones() {
       const pdfRes = await fetch('/api/matriz/generar-pdf-propuesta', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ anio, tarifas: tarifas.map((t) => ({ nombre: t.nombre, valores: t.valores })) }),
+        body: JSON.stringify({
+          anio,
+          tarifas: tarifas.map((t) => ({ nombre: t.nombre, valores: t.valores, personaExtra: t.personaExtra })),
+        }),
       })
       const pdfResp = await pdfRes.json()
       if (!pdfRes.ok || !pdfResp.success) {
@@ -68,7 +71,7 @@ export default function HistorialEdiciones() {
       a.click()
       URL.revokeObjectURL(pdfUrl)
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'No se pudo publicar la edición')
+      setError(mensajeError(err, 'No se pudo publicar la edición'))
     } finally {
       setPublicando(null)
     }

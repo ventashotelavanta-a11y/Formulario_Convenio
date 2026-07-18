@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react'
-import { api, ApiError } from './api'
+import { api, mensajeError } from './api'
 
 interface Canal {
   id: number
@@ -29,10 +29,6 @@ export default function NuevoModuloModal({
 
   function toggleCanal(id: number) {
     setCanalIds((prev) => (prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]))
-  }
-
-  function mensajeError(err: unknown): string {
-    return err instanceof ApiError ? err.message : 'No se pudo guardar'
   }
 
   async function agregarCanal() {

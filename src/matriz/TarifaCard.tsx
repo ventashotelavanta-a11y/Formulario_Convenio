@@ -1,17 +1,20 @@
 import { useState } from 'react'
-import { api, ApiError } from './api'
+import { api, mensajeError } from './api'
+import { resolveSiblingOverride } from './cellSave'
 
 export interface TarifaValor {
   tipoHabitacion: string
   pax: number
   montoActual: number | null
   montoPropuesto: number | null
+  montoPropuestoOverride: number | null
 }
 
 export interface TarifaPersonaExtra {
   tipoHabitacion: string
   montoActual: number | null
   montoPropuesto: number | null
+  montoPropuestoOverride: number | null
 }
 
 export interface Tarifa {
@@ -69,10 +72,6 @@ export default function TarifaCard({
     setDraft(monto === null ? '' : String(monto))
   }
 
-  function mensajeError(err: unknown): string {
-    return err instanceof ApiError ? err.message : 'No se pudo guardar'
-  }
-
   async function guardarCelda(tipoHabitacion: string, pax: number, campo: 'montoActual' | 'montoPropuesto') {
     const key = `${tipoHabitacion}|${pax}|${campo}`
     const nuevoMonto = draft.trim() === '' ? null : Number(draft)
@@ -85,7 +84,7 @@ export default function TarifaCard({
         tipoHabitacion,
         pax,
         montoActual: campo === 'montoActual' ? nuevoMonto : actual?.montoActual ?? null,
-        montoPropuesto: campo === 'montoPropuesto' ? nuevoMonto : actual?.montoPropuesto ?? null,
+        montoPropuesto: resolveSiblingOverride(campo, nuevoMonto, actual),
       })
       setError(null)
       setEditing(null)
@@ -106,7 +105,7 @@ export default function TarifaCard({
         tarifaId: tarifa.id,
         tipoHabitacion,
         montoActual: campo === 'montoActual' ? nuevoMonto : actual?.montoActual ?? null,
-        montoPropuesto: campo === 'montoPropuesto' ? nuevoMonto : actual?.montoPropuesto ?? null,
+        montoPropuesto: resolveSiblingOverride(campo, nuevoMonto, actual),
       })
       setError(null)
       setEditing(null)

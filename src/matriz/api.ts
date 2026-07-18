@@ -4,6 +4,10 @@ export class ApiError extends Error {
   }
 }
 
+export function mensajeError(err: unknown, fallback = 'No se pudo guardar'): string {
+  return err instanceof ApiError ? err.message : fallback
+}
+
 async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const res = await fetch(`/api${path}`, {
     ...options,
