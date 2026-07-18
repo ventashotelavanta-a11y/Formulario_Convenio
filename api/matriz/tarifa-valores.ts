@@ -19,12 +19,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const { rows: th } = await pool.query('SELECT id FROM tipos_habitacion WHERE nombre = $1', [tipoHabitacion])
   if (!th[0]) return res.status(400).json({ error: `Tipo de habitación desconocido: ${tipoHabitacion}` })
 
-  await pool.query(
-    `INSERT INTO tarifa_valores (tarifa_id, tipo_habitacion_id, pax, monto_actual, monto_propuesto)
-     VALUES ($1,$2,$3,$4,$5)
-     ON CONFLICT (tarifa_id, tipo_habitacion_id, pax)
-     DO UPDATE SET monto_actual = $4, monto_propuesto = $5`,
-    [tarifaId, th[0].id, pax, montoActual ?? null, montoPropuesto ?? null],
-  )
-  return res.status(200).json({ ok: true })
+  try {
+    await pool.query(
+      `INSERT INTO tarifa_valores (tarifa_id, tipo_habitacion_id, pax, monto_actual, monto_propuesto)
+       VALUES ($1,$2,$3,$4,$5)
+       ON CONFLICT (tarifa_id, tipo_habitacion_id, pax)
+       DO UPDATE SET monto_actual = $4, monto_propuesto = $5`,
+      [tarifaId, th[0].id, pax, montoActual ?? null, montoPropuesto ?? null],
+    )
+    return res.status(200).json({ ok: true })
+  } catch (err) {
+    return res.status(500).json({ error: 'No se pudo guardar el valor de la tarifa' })
+  }
 }

@@ -27,10 +27,9 @@ CREATE TABLE secciones (
 CREATE TABLE tipos_habitacion (
   id                  SERIAL PRIMARY KEY,
   seccion_id          INT NOT NULL REFERENCES secciones(id),
-  nombre              TEXT NOT NULL,
+  nombre              TEXT NOT NULL UNIQUE,
   camas_descripcion   TEXT NOT NULL,
-  capacidad_personas  INT NOT NULL,
-  UNIQUE (seccion_id, nombre)
+  capacidad_personas  INT NOT NULL
 );
 
 CREATE TABLE tarifas (
