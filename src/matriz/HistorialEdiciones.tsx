@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api, ApiError } from './api'
+import type { Tarifa } from './TarifaCard'
 
 interface Edicion {
   id: number
@@ -42,6 +43,22 @@ export default function HistorialEdiciones() {
       }>('/matriz/publicar', { edicionId })
       descargar('tarifas.json', tarifasJson)
       descargar('tarifas-cotizador.json', tarifasCotizadorJson)
+
+      const anio = ediciones.find((e) => e.id === edicionId)?.anio
+      const tarifas = await api.get<Tarifa[]>(`/matriz/tarifas?edicionId=${edicionId}`)
+      const pdfResp = await fetch('/api/matriz/generar-pdf-propuesta', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ anio, tarifas: tarifas.map((t) => ({ nombre: t.nombre, valores: t.valores })) }),
+      }).then((r) => r.json())
+      const pdfBlob = new Blob([Uint8Array.from(atob(pdfResp.pdfBase64), (c) => c.charCodeAt(0))], { type: 'application/pdf' })
+      const pdfUrl = URL.createObjectURL(pdfBlob)
+      const a = document.createElement('a')
+      a.href = pdfUrl
+      a.download = `Propuesta_Tarifas_${anio}.pdf`
+      a.click()
+      URL.revokeObjectURL(pdfUrl)
+
       await cargar()
     } catch (err) {
       setError(err instanceof ApiError ? err.message : 'No se pudo publicar la edición')
@@ -86,8 +103,9 @@ export default function HistorialEdiciones() {
       </table>
       {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
       <p className="text-xs text-gray-500 mt-3">
-        Publicar descarga <code>tarifas.json</code> y <code>tarifas-cotizador.json</code> — colócalos manualmente en
-        <code> convenios-avanta-2026/api/</code> y <code>cotizacion-avanta/api/</code> respectivamente.
+        Publicar descarga <code>tarifas.json</code>, <code>tarifas-cotizador.json</code> y un PDF de la propuesta —
+        coloca los JSON manualmente en <code>convenios-avanta-2026/api/</code> y{' '}
+        <code>cotizacion-avanta/api/</code> respectivamente.
       </p>
     </div>
   )
