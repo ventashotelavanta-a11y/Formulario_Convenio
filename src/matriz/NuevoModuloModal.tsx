@@ -1,5 +1,5 @@
 import { useEffect, useState, type FormEvent } from 'react'
-import { api } from './api'
+import { api, ApiError } from './api'
 
 interface Canal {
   id: number
@@ -20,6 +20,8 @@ export default function NuevoModuloModal({
   const [canalIds, setCanalIds] = useState<number[]>([])
   const [nuevoCanal, setNuevoCanal] = useState('')
   const [saving, setSaving] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [canalError, setCanalError] = useState<string | null>(null)
 
   useEffect(() => {
     api.get<Canal[]>('/matriz/canales').then(setCanales)
@@ -29,21 +31,36 @@ export default function NuevoModuloModal({
     setCanalIds((prev) => (prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]))
   }
 
+  function mensajeError(err: unknown): string {
+    return err instanceof ApiError ? err.message : 'No se pudo guardar'
+  }
+
   async function agregarCanal() {
     if (!nuevoCanal.trim()) return
-    const canal = await api.post<Canal>('/matriz/canales', { nombre: nuevoCanal.trim() })
-    setCanales((prev) => [...prev, canal])
-    setCanalIds((prev) => [...prev, canal.id])
-    setNuevoCanal('')
+    try {
+      const canal = await api.post<Canal>('/matriz/canales', { nombre: nuevoCanal.trim() })
+      setCanales((prev) => [...prev, canal])
+      setCanalIds((prev) => [...prev, canal.id])
+      setNuevoCanal('')
+      setCanalError(null)
+    } catch (err) {
+      setCanalError(mensajeError(err))
+    }
   }
 
   async function onSubmit(e: FormEvent) {
     e.preventDefault()
     if (!nombre.trim() || canalIds.length === 0) return
     setSaving(true)
-    await api.post('/matriz/tarifas', { edicionId, nombre: nombre.trim(), canalIds })
-    setSaving(false)
-    onCreated()
+    try {
+      await api.post('/matriz/tarifas', { edicionId, nombre: nombre.trim(), canalIds })
+      setError(null)
+      onCreated()
+    } catch (err) {
+      setError(mensajeError(err))
+    } finally {
+      setSaving(false)
+    }
   }
 
   return (
@@ -86,8 +103,10 @@ export default function NuevoModuloModal({
             + Canal
           </button>
         </div>
+        {canalError && <div className="text-red-500 text-xs mb-4">{canalError}</div>}
 
-        <div className="flex justify-end gap-2">
+        <div className="flex justify-end items-center gap-2">
+          {error && <div className="text-red-500 text-xs mr-auto">{error}</div>}
           <button type="button" onClick={onClose} className="px-4 py-2 text-sm text-gray-600">
             Cancelar
           </button>
