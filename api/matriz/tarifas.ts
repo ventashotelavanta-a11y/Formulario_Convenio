@@ -1,6 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import pool from '../_lib/db'
 import { requireAuth } from '../_lib/requireAuth'
+import { computeMontoPropuesto } from '../_lib/matrizCalc'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!requireAuth(req)) return res.status(401).json({ error: 'No autenticado' })
@@ -16,7 +17,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const ids = tarifas.map((t) => t.id)
     if (ids.length === 0) return res.status(200).json([])
 
-    const [{ rows: canales }, { rows: valores }, { rows: extras }] = await Promise.all([
+    const [{ rows: canales }, { rows: valores }, { rows: extras }, { rows: edicionRows }] = await Promise.all([
       pool.query(
         `SELECT tc.tarifa_id, c.nombre FROM tarifa_canales tc JOIN canales_venta c ON c.id = tc.canal_id WHERE tc.tarifa_id = ANY($1)`,
         [ids],
@@ -33,7 +34,9 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
          WHERE tpe.tarifa_id = ANY($1)`,
         [ids],
       ),
+      pool.query('SELECT aumento_default_mxn FROM ediciones WHERE id = $1', [edicionId]),
     ])
+    const aumentoDefault = edicionRows[0] ? Number(edicionRows[0].aumento_default_mxn) : 0
 
     const result = tarifas.map((t) => ({
       id: t.id,
@@ -43,19 +46,29 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       canales: canales.filter((c) => c.tarifa_id === t.id).map((c) => c.nombre),
       valores: valores
         .filter((v) => v.tarifa_id === t.id)
-        .map((v) => ({
-          tipoHabitacion: v.tipo_habitacion,
-          pax: v.pax,
-          montoActual: v.monto_actual === null ? null : Number(v.monto_actual),
-          montoPropuesto: v.monto_propuesto === null ? null : Number(v.monto_propuesto),
-        })),
+        .map((v) => {
+          const montoActual = v.monto_actual === null ? null : Number(v.monto_actual)
+          const overrideDb = v.monto_propuesto === null ? null : Number(v.monto_propuesto)
+          return {
+            tipoHabitacion: v.tipo_habitacion,
+            pax: v.pax,
+            montoActual,
+            montoPropuesto: computeMontoPropuesto(montoActual, aumentoDefault, overrideDb),
+          }
+        }),
+      // ponytail: same NULL-fallback as `valores` above — el spec dice "todas las celdas
+      // sin override manual", y persona_extra es una celda mas con la misma columna monto_propuesto.
       personaExtra: extras
         .filter((e) => e.tarifa_id === t.id)
-        .map((e) => ({
-          tipoHabitacion: e.tipo_habitacion,
-          montoActual: e.monto_actual === null ? null : Number(e.monto_actual),
-          montoPropuesto: e.monto_propuesto === null ? null : Number(e.monto_propuesto),
-        })),
+        .map((e) => {
+          const montoActual = e.monto_actual === null ? null : Number(e.monto_actual)
+          const overrideDb = e.monto_propuesto === null ? null : Number(e.monto_propuesto)
+          return {
+            tipoHabitacion: e.tipo_habitacion,
+            montoActual,
+            montoPropuesto: computeMontoPropuesto(montoActual, aumentoDefault, overrideDb),
+          }
+        }),
     }))
 
     return res.status(200).json(result)
