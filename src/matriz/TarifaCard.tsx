@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { api } from './api'
+import { api, ApiError } from './api'
 
 export interface TarifaValor {
   tipoHabitacion: string
@@ -53,6 +53,7 @@ export default function TarifaCard({
 }) {
   const [editing, setEditing] = useState<string | null>(null)
   const [draft, setDraft] = useState('')
+  const [error, setError] = useState<{ key: string; message: string } | null>(null)
 
   function valorDe(tipoHabitacion: string, pax: number) {
     return tarifa.valores.find((v) => v.tipoHabitacion === tipoHabitacion && v.pax === pax) ?? null
@@ -62,20 +63,63 @@ export default function TarifaCard({
     return tarifa.personaExtra.find((e) => e.tipoHabitacion === tipoHabitacion) ?? null
   }
 
+  function empezarEdicion(key: string, monto: number | null) {
+    setError(null)
+    setEditing(key)
+    setDraft(monto === null ? '' : String(monto))
+  }
+
+  function mensajeError(err: unknown): string {
+    return err instanceof ApiError ? err.message : 'No se pudo guardar'
+  }
+
   async function guardarCelda(tipoHabitacion: string, pax: number, campo: 'montoActual' | 'montoPropuesto') {
+    const key = `${tipoHabitacion}|${pax}|${campo}`
     const nuevoMonto = draft.trim() === '' ? null : Number(draft)
     if (draft.trim() !== '' && Number.isNaN(nuevoMonto)) return setEditing(null)
 
     const actual = valorDe(tipoHabitacion, pax)
-    await api.put('/matriz/tarifa-valores', {
-      tarifaId: tarifa.id,
-      tipoHabitacion,
-      pax,
-      montoActual: campo === 'montoActual' ? nuevoMonto : actual?.montoActual ?? null,
-      montoPropuesto: campo === 'montoPropuesto' ? nuevoMonto : actual?.montoPropuesto ?? null,
-    })
-    setEditing(null)
-    onCellSaved()
+    try {
+      await api.put('/matriz/tarifa-valores', {
+        tarifaId: tarifa.id,
+        tipoHabitacion,
+        pax,
+        montoActual: campo === 'montoActual' ? nuevoMonto : actual?.montoActual ?? null,
+        montoPropuesto: campo === 'montoPropuesto' ? nuevoMonto : actual?.montoPropuesto ?? null,
+      })
+      setError(null)
+      setEditing(null)
+      onCellSaved()
+    } catch (err) {
+      setError({ key, message: mensajeError(err) })
+    }
+  }
+
+  async function guardarExtra(tipoHabitacion: string, campo: 'montoActual' | 'montoPropuesto') {
+    const key = `extra|${tipoHabitacion}|${campo}`
+    const nuevoMonto = draft.trim() === '' ? null : Number(draft)
+    if (draft.trim() !== '' && Number.isNaN(nuevoMonto)) return setEditing(null)
+
+    const actual = extraDe(tipoHabitacion)
+    try {
+      await api.put('/matriz/tarifa-persona-extra', {
+        tarifaId: tarifa.id,
+        tipoHabitacion,
+        montoActual: campo === 'montoActual' ? nuevoMonto : actual?.montoActual ?? null,
+        montoPropuesto: campo === 'montoPropuesto' ? nuevoMonto : actual?.montoPropuesto ?? null,
+      })
+      setError(null)
+      setEditing(null)
+      onCellSaved()
+    } catch (err) {
+      setError({ key, message: mensajeError(err) })
+    }
+  }
+
+  function errorDe(key: string) {
+    return error?.key === key ? (
+      <div className="text-red-500 text-xs whitespace-nowrap">{error.message}</div>
+    ) : null
   }
 
   function celda(tipoHabitacion: string, pax: number, campo: 'montoActual' | 'montoPropuesto') {
@@ -85,25 +129,50 @@ export default function TarifaCard({
 
     if (editing === key) {
       return (
-        <input
-          autoFocus
-          className="w-24 border rounded px-1 py-0.5 text-sm"
-          value={draft}
-          onChange={(e) => setDraft(e.target.value)}
-          onBlur={() => guardarCelda(tipoHabitacion, pax, campo)}
-          onKeyDown={(e) => e.key === 'Enter' && guardarCelda(tipoHabitacion, pax, campo)}
-        />
+        <span className="inline-block">
+          <input
+            autoFocus
+            className="w-24 border rounded px-1 py-0.5 text-sm"
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            onBlur={() => guardarCelda(tipoHabitacion, pax, campo)}
+            onKeyDown={(e) => e.key === 'Enter' && guardarCelda(tipoHabitacion, pax, campo)}
+          />
+          {errorDe(key)}
+        </span>
       )
     }
 
     return (
-      <button
-        className="text-sm hover:underline"
-        onClick={() => {
-          setEditing(key)
-          setDraft(monto === null ? '' : String(monto))
-        }}
-      >
+      <button className="text-sm hover:underline" onClick={() => empezarEdicion(key, monto)}>
+        {fmt(monto)}
+      </button>
+    )
+  }
+
+  function celdaExtra(tipoHabitacion: string, campo: 'montoActual' | 'montoPropuesto') {
+    const key = `extra|${tipoHabitacion}|${campo}`
+    const extra = extraDe(tipoHabitacion)
+    const monto = campo === 'montoActual' ? extra?.montoActual ?? null : extra?.montoPropuesto ?? null
+
+    if (editing === key) {
+      return (
+        <span className="inline-block">
+          <input
+            autoFocus
+            className="w-24 border rounded px-1 py-0.5 text-sm"
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            onBlur={() => guardarExtra(tipoHabitacion, campo)}
+            onKeyDown={(e) => e.key === 'Enter' && guardarExtra(tipoHabitacion, campo)}
+          />
+          {errorDe(key)}
+        </span>
+      )
+    }
+
+    return (
+      <button className="text-sm hover:underline" onClick={() => empezarEdicion(key, monto)}>
         {fmt(monto)}
       </button>
     )
@@ -157,9 +226,11 @@ export default function TarifaCard({
               <td key={pax} className="text-center">
                 {pax >= 4 &&
                   TIPOS_HABITACION.filter((t) => extraDe(t)).map((t) => (
-                    <span key={t} className="block">
-                      {fmt(extraDe(t)!.montoActual)}
-                    </span>
+                    <div key={t} className="flex items-center justify-center gap-1">
+                      {celdaExtra(t, 'montoActual')}
+                      {showPropuesta && <span className="text-gray-300">/</span>}
+                      {showPropuesta && celdaExtra(t, 'montoPropuesto')}
+                    </div>
                   ))}
               </td>
             ))}
