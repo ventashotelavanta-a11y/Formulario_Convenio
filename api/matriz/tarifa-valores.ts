@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
-import pool from '../_lib/db'
-import { requireAuth } from '../_lib/requireAuth'
+import pool from '../_lib/db.js'
+import { requireAuth } from '../_lib/requireAuth.js'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!requireAuth(req)) return res.status(401).json({ error: 'No autenticado' })

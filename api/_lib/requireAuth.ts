@@ -1,5 +1,5 @@
 import type { VercelRequest } from '@vercel/node'
-import { verifySession, SESSION_COOKIE_NAME } from './auth'
+import { verifySession, SESSION_COOKIE_NAME } from './auth.js'
 
 function parseCookies(header: string | undefined): Record<string, string> {
   const out: Record<string, string> = {}
