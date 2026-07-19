@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { api, mensajeError } from './api'
+import { api, mensajeError, ApiError } from './api'
 import type { Tarifa } from './TarifaCard'
 
 interface Edicion {
@@ -61,7 +61,7 @@ export default function HistorialEdiciones() {
       })
       const pdfResp = await pdfRes.json()
       if (!pdfRes.ok || !pdfResp.success) {
-        throw new Error(pdfResp.error || `Error al generar el PDF de la propuesta: ${pdfRes.status}`)
+        throw new ApiError(pdfRes.status, pdfResp.error || `Error al generar el PDF de la propuesta: ${pdfRes.status}`)
       }
       const pdfBlob = new Blob([Uint8Array.from(atob(pdfResp.pdfBase64), (c) => c.charCodeAt(0))], { type: 'application/pdf' })
       const pdfUrl = URL.createObjectURL(pdfBlob)
