@@ -5,6 +5,7 @@ import DashboardLayout, { type MatrizTab } from './DashboardLayout'
 import MatrizActual from './MatrizActual'
 import PropuestaView from './PropuestaView'
 import HistorialEdiciones from './HistorialEdiciones'
+import AppsHub from './AppsHub'
 
 function MatrizAppInner() {
   const { user, loading } = useAuth()
@@ -18,6 +19,7 @@ function MatrizAppInner() {
       {tab === 'matriz' && <MatrizActual />}
       {tab === 'propuesta' && <PropuestaView />}
       {tab === 'historial' && <HistorialEdiciones />}
+      {tab === 'apps' && <AppsHub />}
     </DashboardLayout>
   )
 }
