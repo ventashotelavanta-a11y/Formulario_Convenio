@@ -1,6 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import pool from '../_lib/db'
-import { verifyPassword, signSession, SESSION_COOKIE_NAME } from '../_lib/auth'
+import { hashPassword, verifyPassword, signSession, SESSION_COOKIE_NAME } from '../_lib/auth'
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Método no permitido' })
@@ -10,7 +10,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const { rows } = await pool.query('SELECT id, password_hash FROM usuarios WHERE email = $1', [email])
   const usuario = rows[0]
-  if (!usuario || !verifyPassword(password, usuario.password_hash)) {
+  if (!usuario) {
+    return res.status(401).json({ error: 'Email o contraseña incorrectos' })
+  }
+
+  if (usuario.password_hash === null) {
+    // Cuenta sin contraseña asignada: la primera contraseña enviada se guarda como definitiva.
+    if (password.length < 8) {
+      return res.status(400).json({ error: 'Tu primera contraseña debe tener al menos 8 caracteres' })
+    }
+    await pool.query('UPDATE usuarios SET password_hash = $1 WHERE id = $2', [hashPassword(password), usuario.id])
+  } else if (!verifyPassword(password, usuario.password_hash)) {
     return res.status(401).json({ error: 'Email o contraseña incorrectos' })
   }
 
