@@ -21,6 +21,11 @@ const APPS: AppLink[] = [
     descripcion: 'Renta de sala de juntas y coffee break.',
     url: 'https://cotizacion-sala-nova.vercel.app/',
   },
+  {
+    nombre: 'Reporte Semanal',
+    descripcion: 'Llena el reporte de actividades semanal.',
+    url: 'https://reporte-semanal-rho.vercel.app/',
+  },
 ]
 
 export default function AppsHub() {
