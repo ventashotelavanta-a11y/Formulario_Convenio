@@ -1,5 +1,6 @@
-import type { ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { useAuth } from './AuthContext'
+import ChangePasswordModal from './ChangePasswordModal'
 
 export type MatrizTab = 'matriz' | 'propuesta' | 'historial'
 
@@ -19,6 +20,7 @@ export default function DashboardLayout({
   children: ReactNode
 }) {
   const { user, logout } = useAuth()
+  const [changingPassword, setChangingPassword] = useState(false)
 
   return (
     <div className="min-h-screen bg-[#F5F5F5]">
@@ -42,12 +44,16 @@ export default function DashboardLayout({
         </nav>
         <div className="flex items-center gap-3 text-sm text-gray-600">
           <span>{user?.nombre}</span>
+          <button onClick={() => setChangingPassword(true)} className="text-green-dark font-medium">
+            Cambiar contraseña
+          </button>
           <button onClick={() => logout()} className="text-green-dark font-medium">
             Salir
           </button>
         </div>
       </header>
       <main className="p-6">{children}</main>
+      {changingPassword && <ChangePasswordModal onClose={() => setChangingPassword(false)} />}
     </div>
   )
 }

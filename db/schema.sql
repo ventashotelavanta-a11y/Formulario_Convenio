@@ -2,7 +2,7 @@ CREATE TABLE usuarios (
   id            SERIAL PRIMARY KEY,
   nombre        TEXT NOT NULL,
   email         TEXT NOT NULL UNIQUE,
-  password_hash TEXT -- NULL = sin contraseña asignada; se guarda en el primer login
+  password_hash TEXT NOT NULL
 );
 
 CREATE TABLE ediciones (
