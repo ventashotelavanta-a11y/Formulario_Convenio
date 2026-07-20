@@ -6,35 +6,33 @@ interface AppLink {
 }
 
 // Agrega aquí cada nueva herramienta de Avanta conforme se vaya sumando al hub.
-// `preview` es una captura real del hero de cada app. Se sirve desde el propio
-// repo en GitHub (raw.githubusercontent.com) en vez de public/ — así el deploy
-// a Vercel no necesita reincluir binarios en cada redeploy manual.
-const RAW_BASE = 'https://raw.githubusercontent.com/ventashotelavanta-a11y/Formulario_Convenio/main/public/apps'
-
+// `preview` es una captura real del hero de cada app, servida desde public/apps/
+// (GitHub raw no renderizaba bien las imágenes en el navegador — reincluir los
+// binarios en el deploy es más código de despliegue pero se ve bien).
 const APPS: AppLink[] = [
   {
     nombre: 'Cotizador de Habitaciones',
     descripcion: 'Cotizaciones de hospedaje para clientes.',
     url: 'https://cotizacion-avanta-ricardo-pena-covarrubias-projects.vercel.app/',
-    preview: `${RAW_BASE}/cotizador-habitaciones.jpg`,
+    preview: '/apps/cotizador-habitaciones.jpg',
   },
   {
     nombre: 'Cotizador Sala NOVA',
     descripcion: 'Renta de sala de juntas y coffee break.',
     url: 'https://cotizacion-sala-nova.vercel.app/',
-    preview: `${RAW_BASE}/cotizador-sala-nova.jpg`,
+    preview: '/apps/cotizador-sala-nova.jpg',
   },
   {
     nombre: 'Formulario de Convenios',
     descripcion: 'Genera convenios corporativos en PDF para empresas.',
     url: 'https://formulario-convenio.vercel.app/',
-    preview: `${RAW_BASE}/convenio.jpg`,
+    preview: '/apps/convenio.jpg',
   },
   {
     nombre: 'Reporte Semanal',
     descripcion: 'Llena el reporte de actividades semanal.',
     url: 'https://reporte-semanal-rho.vercel.app/',
-    preview: `${RAW_BASE}/reporte-semanal.jpg`,
+    preview: '/apps/reporte-semanal.jpg',
   },
 ]
 
