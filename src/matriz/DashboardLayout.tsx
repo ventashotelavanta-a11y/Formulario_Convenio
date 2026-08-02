@@ -27,7 +27,7 @@ export default function DashboardLayout({
     <div className="min-h-screen bg-[#F5F5F5]">
       <header className="bg-white border-b flex items-center justify-between px-6 py-3">
         <div className="flex items-center gap-3">
-          <img src="/logo_avanta_principal.png" alt="Avanta Hotel & Villas" className="h-9" />
+          <img src="/logo_avanta_principal.jpg" alt="Avanta Hotel & Villas" className="h-9" />
           <span className="font-semibold text-gray-700">Matriz de Tarifas</span>
         </div>
         <nav className="flex gap-1">

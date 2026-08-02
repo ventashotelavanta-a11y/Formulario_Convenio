@@ -21,6 +21,7 @@ export interface Tarifa {
   id: number
   nombre: string
   canales: string[]
+  canalIds: number[]
   valores: TarifaValor[]
   personaExtra: TarifaPersonaExtra[]
 }
@@ -49,10 +50,12 @@ export default function TarifaCard({
   tarifa,
   showPropuesta,
   onCellSaved,
+  onEdit,
 }: {
   tarifa: Tarifa
   showPropuesta: boolean
   onCellSaved: () => void
+  onEdit?: () => void
 }) {
   const [editing, setEditing] = useState<string | null>(null)
   const [draft, setDraft] = useState('')
@@ -181,12 +184,21 @@ export default function TarifaCard({
     <div className="bg-white rounded-xl shadow p-4">
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold">{tarifa.nombre}</h3>
-        <div className="flex gap-1">
+        <div className="flex items-center gap-1">
           {tarifa.canales.map((c) => (
             <span key={c} className="text-xs bg-gray-100 rounded-full px-2 py-0.5 text-gray-600">
               {c}
             </span>
           ))}
+          {onEdit && (
+            <button
+              onClick={onEdit}
+              title="Editar módulo"
+              className="ml-1 text-xs text-gray-400 hover:text-green-dark"
+            >
+              Editar
+            </button>
+          )}
         </div>
       </div>
       <table className="w-full text-sm">

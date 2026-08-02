@@ -19,7 +19,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const [{ rows: canales }, { rows: valores }, { rows: extras }, { rows: edicionRows }] = await Promise.all([
       pool.query(
-        `SELECT tc.tarifa_id, c.nombre FROM tarifa_canales tc JOIN canales_venta c ON c.id = tc.canal_id WHERE tc.tarifa_id = ANY($1)`,
+        `SELECT tc.tarifa_id, c.id AS canal_id, c.nombre FROM tarifa_canales tc JOIN canales_venta c ON c.id = tc.canal_id WHERE tc.tarifa_id = ANY($1)`,
         [ids],
       ),
       pool.query(
@@ -44,6 +44,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       vigenciaDesde: t.vigencia_desde,
       vigenciaHasta: t.vigencia_hasta,
       canales: canales.filter((c) => c.tarifa_id === t.id).map((c) => c.nombre),
+      canalIds: canales.filter((c) => c.tarifa_id === t.id).map((c) => c.canal_id),
       valores: valores
         .filter((v) => v.tarifa_id === t.id)
         .map((v) => {
@@ -101,6 +102,37 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     } finally {
       client.release()
     }
+  }
+
+  if (req.method === 'PUT') {
+    const { id, nombre, canalIds } = req.body ?? {}
+    if (!id || !nombre || !Array.isArray(canalIds) || canalIds.length === 0) {
+      return res.status(400).json({ error: 'Falta id, nombre o canalIds' })
+    }
+
+    const client = await pool.connect()
+    try {
+      await client.query('BEGIN')
+      await client.query('UPDATE tarifas SET nombre = $1 WHERE id = $2', [nombre.trim(), id])
+      await client.query('DELETE FROM tarifa_canales WHERE tarifa_id = $1', [id])
+      for (const canalId of canalIds) {
+        await client.query('INSERT INTO tarifa_canales (tarifa_id, canal_id) VALUES ($1,$2)', [id, canalId])
+      }
+      await client.query('COMMIT')
+      return res.status(200).json({ ok: true })
+    } catch (err) {
+      await client.query('ROLLBACK')
+      return res.status(500).json({ error: 'No se pudo actualizar el módulo' })
+    } finally {
+      client.release()
+    }
+  }
+
+  if (req.method === 'DELETE') {
+    const id = Number(req.query.id)
+    if (!id) return res.status(400).json({ error: 'Falta id' })
+    await pool.query('DELETE FROM tarifas WHERE id = $1', [id])
+    return res.status(200).json({ ok: true })
   }
 
   return res.status(405).json({ error: 'Método no permitido' })

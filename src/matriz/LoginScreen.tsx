@@ -24,7 +24,7 @@ export default function LoginScreen() {
   return (
     <div className="min-h-screen bg-[#F5F5F5] flex items-center justify-center p-6">
       <form onSubmit={onSubmit} className="bg-white rounded-2xl shadow-lg p-10 w-full max-w-sm">
-        <img src="/logo_avanta_principal.png" alt="Avanta Hotel & Villas" className="h-12 mb-6" />
+        <img src="/logo_avanta_principal.jpg" alt="Avanta Hotel & Villas" className="h-12 mb-6" />
         <h1 className="text-xl font-semibold mb-1">Matriz de Tarifas</h1>
         <p className="text-sm text-gray-500 mb-6">Inicia sesión para continuar</p>
 

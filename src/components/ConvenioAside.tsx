@@ -8,7 +8,7 @@ export default function ConvenioAside() {
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          backgroundImage: "url('/logo_avanta_principal.png')",
+          backgroundImage: "url('/logo_avanta_principal.jpg')",
           backgroundSize: '400px 400px',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',

@@ -111,7 +111,7 @@ export default function ConvenioForm() {
         style={{
           width: 380,
           height: 380,
-          backgroundImage: "url('/logo_avanta_principal.png')",
+          backgroundImage: "url('/logo_avanta_principal.jpg')",
           backgroundSize: 'contain',
           backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center',
@@ -126,7 +126,7 @@ export default function ConvenioForm() {
           <>
             <div className="text-center mb-9">
               <img
-                src="/logo_avanta_principal.png"
+                src="/logo_avanta_principal.jpg"
                 alt="Avanta Hotel & Villas"
                 className="max-w-[100px] opacity-85 mx-auto mb-9"
               />
