@@ -23,6 +23,14 @@ const APPS: AppLink[] = [
     preview: '/apps/cotizador-sala-nova.jpg',
   },
   {
+    nombre: 'Cotización con Alimentos',
+    descripcion: 'Sala NOVA: coffee break + menú por día (plantilla editable).',
+    url: 'https://cotizacion-sala-nova.vercel.app/alimentos.html',
+    // TODO: reemplazar por una captura real de alimentos.html (el placeholder
+    // de arriba se copió de cotizador-sala-nova.jpg mientras tanto).
+    preview: '/apps/cotizacion-alimentos.jpg',
+  },
+  {
     nombre: 'Formulario de Convenios',
     descripcion: 'Genera convenios corporativos en PDF para empresas.',
     url: 'https://formulario-convenio.vercel.app/',
