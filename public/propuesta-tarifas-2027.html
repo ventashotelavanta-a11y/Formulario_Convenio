@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<title>Propuesta Tarifas 2027 - Avanta Hotel & Villas</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;background:#EEE8DC;color:#1F2933;font:14px/1.55 'Plus Jakarta Sans',system-ui,sans-serif}
+.sheet{max-width:1180px;margin:28px auto 60px;background:#fff;box-shadow:0 10px 40px rgba(31,41,51,.08);border-radius:4px;overflow:hidden}
+.sheet-inner{padding:0 46px 0 46px}
+
+/* ============ MEMBRETE ============ */
+.letterhead{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;padding:34px 46px 24px;border-bottom:3px solid #7FA44A;background:#fff}
+.letterhead .logo{width:150px;height:auto;display:block}
+.letterhead .corp{text-align:right;color:#1F2933}
+.letterhead .corp .razon{font-weight:700;font-size:15px;letter-spacing:.02em;color:#1F2933;margin:0}
+.letterhead .corp .brand{font-weight:600;font-size:12px;color:#5F7F34;letter-spacing:.14em;text-transform:uppercase;margin:3px 0 10px}
+.letterhead .corp .meta{color:#6B7280;font-size:11.5px;line-height:1.7}
+.letterhead .corp .meta b{color:#1F2933;font-weight:600}
+
+/* ============ CARTA ============ */
+.docref{display:flex;justify-content:space-between;padding:18px 46px 0;color:#6B7280;font-size:11.5px}
+.docref .num{font-variant-numeric:tabular-nums}
+.title{padding:12px 46px 6px;text-align:center}
+.title .k{font-size:11px;letter-spacing:.22em;color:#7FA44A;text-transform:uppercase;font-weight:700;margin:0}
+.title h1{margin:6px 0 2px;font-size:30px;font-weight:700;letter-spacing:-.015em;color:#1F2933}
+.title .sub{color:#6B7280;font-size:13px;margin:0}
+.ab{padding:14px 46px 10px;display:grid;grid-template-columns:1fr 1fr;gap:30px;color:#374151;font-size:13px;line-height:1.75}
+.ab .lab{color:#9CA3AF;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;margin:0 0 2px;font-weight:700}
+.ab b{color:#1F2933;font-weight:600}
+.body-copy{padding:4px 46px 6px;color:#374151;font-size:13.5px;line-height:1.7}
+.body-copy p{margin:10px 0}
+
+/* ============ CARDS ============ */
+.summary{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;padding:14px 46px 0}
+.card{background:#FBF9F3;border-radius:10px;padding:20px;border:1px solid #ECE7DB}
+.card h2{margin:0 0 12px;font-size:14px;font-weight:700;color:#1F2933;letter-spacing:.02em;text-transform:uppercase}
+.rules{display:grid;gap:8px}
+.rule{display:flex;justify-content:space-between;padding:9px 12px;background:#fff;border:1px solid #E8EFDC;border-radius:8px;font-size:13px}
+.r-name{font-weight:500}
+.r-delta{color:#5F7F34;font-weight:700;font-variant-numeric:tabular-nums}
+.note{font-size:12.5px;color:#4B5563;line-height:1.65}
+.note strong{color:#1F2933}
+.note em{color:#5F7F34;font-style:normal;font-weight:600}
+
+/* ============ TABLAS POR CANAL ============ */
+.channel-title{margin:28px 0 2px;padding:14px 46px 0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.channel-title h2{margin:0;font-size:19px;font-weight:700;letter-spacing:-.01em;color:#1F2933}
+.channel-title .dot{width:9px;height:9px;border-radius:999px;background:#7FA44A}
+.channel-title .sub-h{color:#6B7280;font-size:12.5px}
+.plans{padding:0 46px}
+.plan{background:#fff;border-radius:10px;padding:18px 20px 8px;margin:10px 0;border:1px solid #ECE7DB;break-inside:avoid}
+.plan header{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding-bottom:8px;border-bottom:1px solid #F0EADC;margin-bottom:4px}
+.plan h3{margin:0;font-size:14.5px;font-weight:700;color:#1F2933}
+.base-tag{display:inline-block;margin-left:6px;padding:2px 7px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:#7FA44A;color:#fff;border-radius:999px;vertical-align:middle}
+.delta{color:#5F7F34;font-weight:700;font-size:12.5px;font-variant-numeric:tabular-nums}
+.delta-note{color:#6B7280;font-weight:500;font-size:11px}
+table{width:100%;border-collapse:separate;border-spacing:0;margin-top:4px;font-variant-numeric:tabular-nums}
+thead th{text-align:center;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#6B7280;font-weight:700;padding:9px 6px}
+thead th:first-child{text-align:left}
+tbody th{text-align:left;font-weight:500;color:#1F2933;padding:9px 10px 9px 0;font-size:12.5px;border-top:1px solid #F3EEDF;white-space:nowrap}
+tbody td{padding:8px 5px;border-top:1px solid #F3EEDF;text-align:center;vertical-align:middle;line-height:1.3}
+tbody td.empty{color:#D1D5DB}
+tbody td.pe{background:#FBF7EE}
+tbody td.na{color:#9CA3AF;font-size:12px;font-style:italic;background:#FAF8F3}
+.pax{font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:#9CA3AF;margin-bottom:2px}
+.pax .sub{font-size:9px;color:#B07E2A;font-weight:700;letter-spacing:.08em}
+.row2{display:flex;justify-content:center;align-items:baseline;gap:5px}
+.y26{color:#9CA3AF;text-decoration:line-through;font-size:11.5px}
+.arr{color:#C9D4B9;font-size:11px}
+.y27{color:#1F2933;font-weight:700;font-size:13.5px}
+.dd{font-size:10.5px;color:#7FA44A;font-weight:600;margin-top:2px}
+
+/* ============ CIERRE Y FIRMAS ============ */
+.closing{margin:28px 46px 0;background:#F7F9F2;border:1px solid #E8EFDC;border-radius:10px;padding:20px 22px}
+.closing h2{margin:0 0 8px;font-size:14px;color:#1F2933;letter-spacing:.02em;text-transform:uppercase}
+.closing p{margin:5px 0;font-size:12.5px;color:#4B5563}
+.sign{margin:40px 46px 20px;display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.sign .box{text-align:center}
+.sign .line{border-top:1px solid #1F2933;margin:48px 20px 10px}
+.sign .name{font-size:12.5px;font-weight:600;color:#1F2933;margin:0}
+.sign .role{font-size:11px;color:#6B7280;margin:2px 0 0}
+
+/* ============ PIE ============ */
+.footband{margin-top:30px;background:url('/pie_de_pagina.jpg') center/cover no-repeat;height:120px;position:relative}
+.footmeta{padding:14px 46px 26px;text-align:center;color:#9CA3AF;font-size:11px;background:#fff;border-top:1px solid #ECE7DB}
+.footmeta b{color:#5F7F34}
+
+/* ============ BARRA DE ACCIONES (no imprime) ============ */
+.actionbar{position:sticky;top:0;z-index:10;display:flex;justify-content:center;gap:10px;padding:10px;background:rgba(238,232,220,.92);backdrop-filter:blur(6px);border-bottom:1px solid rgba(0,0,0,.05)}
+.actionbar button, .actionbar a{appearance:none;border:none;background:#5F7F34;color:#fff;padding:9px 16px;border-radius:999px;font:500 13px 'Plus Jakarta Sans',sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:background .15s}
+.actionbar button:hover, .actionbar a:hover{background:#4F6B2B}
+.actionbar a.secondary{background:#fff;color:#1F2933;border:1px solid #D1D5DB}
+.actionbar a.secondary:hover{background:#F7F4EE}
+
+@media print{
+  html,body{background:#fff}
+  .sheet{margin:0;box-shadow:none;border-radius:0;max-width:none}
+  .actionbar{display:none}
+  .plan,.card,.closing{box-shadow:none}
+  .plan,.card,.closing,.summary > *{break-inside:avoid}
+  .channel-title{break-after:avoid}
+}
+@media (max-width:720px){
+  .sheet-inner,.letterhead,.docref,.title,.ab,.body-copy,.summary,.channel-title,.plans,.closing,.sign,.footmeta{padding-left:20px;padding-right:20px;margin-left:0;margin-right:0}
+  .summary,.sign,.letterhead,.ab{grid-template-columns:1fr;gap:16px}
+  .letterhead .corp{text-align:left}
+}
+</style></head><body>
+
+<div class="actionbar">
+  <button onclick="window.print()">&#128424; Imprimir / Guardar PDF</button>
+  <a href="/propuesta-tarifas-2027.pdf" download class="secondary">&#11015; Descargar PDF</a>
+  <a href="/matriz-tarifas" class="secondary">&larr; Volver al hub</a>
+</div>
+
+<article class="sheet">
+  <div class="letterhead">
+    <img class="logo" src="/logo_avanta_principal.jpg" alt="Avanta Hotel & Villas">
+    <div class="corp">
+      <p class="razon">BB Santiago de Quer&eacute;taro, S.A. de C.V.</p>
+      <p class="brand">Avanta Hotel &amp; Villas</p>
+      <div class="meta">
+        Carretera Quer&eacute;taro &ndash; San Luis Potos&iacute; Km 23.8<br>
+        Santa Rosa J&aacute;uregui, Quer&eacute;taro, C.P. 76220, M&eacute;xico<br>
+        <b>Tel:</b> +52 442 628 7668 &middot; <b>Correo:</b> gerencia@avantahotel.com.mx<br>
+        <b>Sitio web:</b> avantahotel.com.mx
+      </div>
+    </div>
+  </div>
+
+  <div class="docref">
+    <span>Documento interno &middot; Direcci&oacute;n Comercial</span>
+    <span class="num">Oficio AV-TAR-2027-001</span>
+  </div>
+
+  <div class="title">
+    <p class="k">Propuesta de aumento de tarifas</p>
+    <h1>Tarifas 2027</h1>
+    <p class="sub">Comparativo 2026 &rarr; 2027 por canal, plan de alimentos y ocupaci&oacute;n</p>
+  </div>
+
+  <div class="ab">
+    <div>
+      <p class="lab">Para</p>
+      <b>Direcci&oacute;n General &mdash; Avanta Hotel &amp; Villas</b><br>
+      <span style="color:#6B7280">Gerencia / Revenue</span>
+    </div>
+    <div>
+      <p class="lab">De</p>
+      <b>Ricardo Pe&ntilde;a Covarrubias</b><br>
+      <span style="color:#6B7280">Ejecutivo Comercial</span>
+    </div>
+    <div>
+      <p class="lab">Fecha de emisi&oacute;n</p>
+      <b>7 de octubre de 2026</b>
+    </div>
+    <div>
+      <p class="lab">Vigencia propuesta</p>
+      <b>A partir del 1 de enero de 2027</b>
+    </div>
+  </div>
+
+  <div class="body-copy">
+    <p>Por medio del presente se somete a consideraci&oacute;n de la Direcci&oacute;n el ajuste de las tarifas de hospedaje para el ejercicio <b>2027</b>, estructurado a partir de las dos <em>tarifas base</em> vigentes <em>&mdash; Convenio Sin Desayuno y Sin Convenio Sin Desayuno &mdash;</em> y propagando los incrementos a los planes derivados (desayuno Americano, desayuno Buffet y persona extra).</p>
+  </div>
+
+  <div class="summary">
+    <div class="card">
+      <h2>Reglas de aumento</h2>
+      <div class="rules"><div class="rule"><span class="r-name">Convenio</span><span class="r-delta">+ $30</span></div>
+<div class="rule"><span class="r-name">Sin Convenio</span><span class="r-delta">+ $50</span></div>
+<div class="rule"><span class="r-name">OTA's (todos)</span><span class="r-delta">+ $50</span></div>
+<div class="rule"><span class="r-name">Desayuno Americano</span><span class="r-delta">+ $20</span></div>
+<div class="rule"><span class="r-name">Desayuno Buffet</span><span class="r-delta">+ $30</span></div>
+<div class="rule"><span class="r-name">Persona extra</span><span class="r-delta">+ $10</span></div></div>
+      <p class="note" style="margin-top:12px">Los aumentos de <strong>canal</strong> (Convenio / Sin Convenio / OTA&apos;s) y <strong>plan</strong> (Americano / Buffet) <em>se suman</em> en cada celda. Ejemplo: <strong>Sin Convenio Con Desayuno Buffet</strong> sube <strong>$50 + $30 = $80</strong> por noche.</p>
+    </div>
+    <div class="card">
+      <h2>Metodolog&iacute;a</h2>
+      <p class="note">Las tarifas base son <strong>Convenio Sin Desayuno</strong> y <strong>Sin Convenio Sin Desayuno</strong>. Los planes con alimentos heredan el incremento de la base y suman el suyo propio.</p>
+      <p class="note">Las <strong>OTA&apos;s</strong> se alinean con el canal Sin Convenio (+$50) para evitar que el canal p&uacute;blico quede por debajo de la venta directa. La <strong>persona extra</strong> (pax 5) suma $10 adicionales a su propio incremento. Las Villas no participan en OTA&apos;s (N/A en 2026 y en 2027).</p>
+    </div>
+  </div>
+
+  <div class="channel-title"><span class="dot"></span><h2>Con Convenio</h2><span class="sub-h">+$30 base &middot; +$50 c/americano &middot; +$60 c/buffet</span></div>
+  <div class="plans">
+        <section class="plan">
+          <header><h3>Con Convenio &middot; Sin Desayuno <span class="base-tag">tarifa base</span></h3><span class="delta">+ $30 <span class="delta-note">(+ $40 pax 5)</span></span></header>
+          <table>
+            <thead><tr><th>Tipo de habitaci&oacute;n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+            <tbody><tr><th>Sencilla King Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$800</span><span class="arr">&rarr;</span><span class="y27">$830</span></div><div class="dd">+ $30</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$800</span><span class="arr">&rarr;</span><span class="y27">$830</span></div><div class="dd">+ $30</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$900</span><span class="arr">&rarr;</span><span class="y27">$930</span></div><div class="dd">+ $30</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,000</span><span class="arr">&rarr;</span><span class="y27">$1,030</span></div><div class="dd">+ $30</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,000</span><span class="arr">&rarr;</span><span class="y27">$1,030</span></div><div class="dd">+ $30</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,100</span><span class="arr">&rarr;</span><span class="y27">$1,130</span></div><div class="dd">+ $30</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,200</span><span class="arr">&rarr;</span><span class="y27">$1,230</span></div><div class="dd">+ $30</div></td><td class="pe"><div class="pax">pax 5<div class="sub">pers. extra</div></div><div class="row2"><span class="y26">$1,300</span><span class="arr">&rarr;</span><span class="y27">$1,340</span></div><div class="dd">+ $40</div></td></tr><tr><th>Sencilla King Villa</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$700</span><span class="arr">&rarr;</span><span class="y27">$730</span></div><div class="dd">+ $30</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$700</span><span class="arr">&rarr;</span><span class="y27">$730</span></div><div class="dd">+ $30</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$800</span><span class="arr">&rarr;</span><span class="y27">$830</span></div><div class="dd">+ $30</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Villa</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$900</span><span class="arr">&rarr;</span><span class="y27">$930</span></div><div class="dd">+ $30</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$900</span><span class="arr">&rarr;</span><span class="y27">$930</span></div><div class="dd">+ $30</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,000</span><span class="arr">&rarr;</span><span class="y27">$1,030</span></div><div class="dd">+ $30</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,100</span><span class="arr">&rarr;</span><span class="y27">$1,130</span></div><div class="dd">+ $30</div></td><td class="pe"><div class="pax">pax 5<div class="sub">pers. extra</div></div><div class="row2"><span class="y26">$1,200</span><span class="arr">&rarr;</span><span class="y27">$1,240</span></div><div class="dd">+ $40</div></td></tr></tbody>
+          </table>
+        </section>
+        <section class="plan">
+          <header><h3>Con Convenio &middot; Con Desayuno Americano</h3><span class="delta">+ $50 <span class="delta-note">(+ $60 pax 5)</span></span></header>
+          <table>
+            <thead><tr><th>Tipo de habitaci&oacute;n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+            <tbody><tr><th>Sencilla King Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$965</span><span class="arr">&rarr;</span><span class="y27">$1,015</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,130</span><span class="arr">&rarr;</span><span class="y27">$1,180</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,295</span><span class="arr">&rarr;</span><span class="y27">$1,345</span></div><div class="dd">+ $50</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,330</span><span class="arr">&rarr;</span><span class="y27">$1,380</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,330</span><span class="arr">&rarr;</span><span class="y27">$1,380</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,495</span><span class="arr">&rarr;</span><span class="y27">$1,545</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,660</span><span class="arr">&rarr;</span><span class="y27">$1,710</span></div><div class="dd">+ $50</div></td><td class="pe"><div class="pax">pax 5<div class="sub">pers. extra</div></div><div class="row2"><span class="y26">$1,825</span><span class="arr">&rarr;</span><span class="y27">$1,885</span></div><div class="dd">+ $60</div></td></tr><tr><th>Sencilla King Villa</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$865</span><span class="arr">&rarr;</span><span class="y27">$915</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,030</span><span class="arr">&rarr;</span><span class="y27">$1,080</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,195</span><span class="arr">&rarr;</span><span class="y27">$1,245</span></div><div class="dd">+ $50</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Villa</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,230</span><span class="arr">&rarr;</span><span class="y27">$1,280</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,230</span><span class="arr">&rarr;</span><span class="y27">$1,280</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,395</span><span class="arr">&rarr;</span><span class="y27">$1,445</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,560</span><span class="arr">&rarr;</span><span class="y27">$1,610</span></div><div class="dd">+ $50</div></td><td class="pe"><div class="pax">pax 5<div class="sub">pers. extra</div></div><div class="row2"><span class="y26">$1,725</span><span class="arr">&rarr;</span><span class="y27">$1,785</span></div><div class="dd">+ $60</div></td></tr></tbody>
+          </table>
+        </section>
+        <section class="plan">
+          <header><h3>Con Convenio &middot; Con Desayuno Buffet</h3><span class="delta">+ $60 <span class="delta-note">(+ $70 pax 5)</span></span></header>
+          <table>
+            <thead><tr><th>Tipo de habitaci&oacute;n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+            <tbody><tr><th>Sencilla King Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,040</span><span class="arr">&rarr;</span><span class="y27">$1,100</span></div><div class="dd">+ $60</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,280</span><span class="arr">&rarr;</span><span class="y27">$1,340</span></div><div class="dd">+ $60</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,520</span><span class="arr">&rarr;</span><span class="y27">$1,580</span></div><div class="dd">+ $60</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,480</span><span class="arr">&rarr;</span><span class="y27">$1,540</span></div><div class="dd">+ $60</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,480</span><span class="arr">&rarr;</span><span class="y27">$1,540</span></div><div class="dd">+ $60</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,720</span><span class="arr">&rarr;</span><span class="y27">$1,780</span></div><div class="dd">+ $60</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,960</span><span class="arr">&rarr;</span><span class="y27">$2,020</span></div><div class="dd">+ $60</div></td><td class="pe"><div class="pax">pax 5<div class="sub">pers. extra</div></div><div class="row2"><span class="y26">$2,200</span><span class="arr">&rarr;</span><span class="y27">$2,270</span></div><div class="dd">+ $70</div></td></tr><tr><th>Sencilla King Villa</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$940</span><span class="arr">&rarr;</span><span class="y27">$1,000</span></div><div class="dd">+ $60</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,180</span><span class="arr">&rarr;</span><span class="y27">$1,240</span></div><div class="dd">+ $60</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,420</span><span class="arr">&rarr;</span><span class="y27">$1,480</span></div><div class="dd">+ $60</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Villa</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,380</span><span class="arr">&rarr;</span><span class="y27">$1,440</span></div><div class="dd">+ $60</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,380</span><span class="arr">&rarr;</span><span class="y27">$1,440</span></div><div class="dd">+ $60</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,620</span><span class="arr">&rarr;</span><span class="y27">$1,680</span></div><div class="dd">+ $60</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,860</span><span class="arr">&rarr;</span><span class="y27">$1,920</span></div><div class="dd">+ $60</div></td><td class="pe"><div class="pax">pax 5<div class="sub">pers. extra</div></div><div class="row2"><span class="y26">$2,100</span><span class="arr">&rarr;</span><span class="y27">$2,170</span></div><div class="dd">+ $70</div></td></tr></tbody>
+          </table>
+        </section></div>
+
+  <div class="channel-title"><span class="dot"></span><h2>Sin Convenio</h2><span class="sub-h">+$50 base &middot; +$70 c/americano &middot; +$80 c/buffet</span></div>
+  <div class="plans">
+        <section class="plan">
+          <header><h3>Sin Convenio &middot; Sin Desayuno <span class="base-tag">tarifa base</span></h3><span class="delta">+ $50 <span class="delta-note">(+ $60 pax 5)</span></span></header>
+          <table>
+            <thead><tr><th>Tipo de habitaci&oacute;n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+            <tbody><tr><th>Sencilla King Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$880</span><span class="arr">&rarr;</span><span class="y27">$930</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$880</span><span class="arr">&rarr;</span><span class="y27">$930</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$980</span><span class="arr">&rarr;</span><span class="y27">$1,030</span></div><div class="dd">+ $50</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,080</span><span class="arr">&rarr;</span><span class="y27">$1,130</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,080</span><span class="arr">&rarr;</span><span class="y27">$1,130</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,180</span><span class="arr">&rarr;</span><span class="y27">$1,230</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,280</span><span class="arr">&rarr;</span><span class="y27">$1,330</span></div><div class="dd">+ $50</div></td><td class="pe"><div class="pax">pax 5<div class="sub">pers. extra</div></div><div class="row2"><span class="y26">$1,380</span><span class="arr">&rarr;</span><span class="y27">$1,440</span></div><div class="dd">+ $60</div></td></tr><tr><th>Sencilla King Villa</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$750</span><span class="arr">&rarr;</span><span class="y27">$800</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$750</span><span class="arr">&rarr;</span><span class="y27">$800</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$850</span><span class="arr">&rarr;</span><span class="y27">$900</span></div><div class="dd">+ $50</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Villa</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$980</span><span class="arr">&rarr;</span><span class="y27">$1,030</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$980</span><span class="arr">&rarr;</span><span class="y27">$1,030</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,080</span><span class="arr">&rarr;</span><span class="y27">$1,130</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,180</span><span class="arr">&rarr;</span><span class="y27">$1,230</span></div><div class="dd">+ $50</div></td><td class="pe"><div class="pax">pax 5<div class="sub">pers. extra</div></div><div class="row2"><span class="y26">$1,280</span><span class="arr">&rarr;</span><span class="y27">$1,340</span></div><div class="dd">+ $60</div></td></tr></tbody>
+          </table>
+        </section>
+        <section class="plan">
+          <header><h3>Sin Convenio &middot; Con Desayuno Americano</h3><span class="delta">+ $70 <span class="delta-note">(+ $80 pax 5)</span></span></header>
+          <table>
+            <thead><tr><th>Tipo de habitaci&oacute;n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+            <tbody><tr><th>Sencilla King Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,045</span><span class="arr">&rarr;</span><span class="y27">$1,115</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,210</span><span class="arr">&rarr;</span><span class="y27">$1,280</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,375</span><span class="arr">&rarr;</span><span class="y27">$1,445</span></div><div class="dd">+ $70</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,410</span><span class="arr">&rarr;</span><span class="y27">$1,480</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,410</span><span class="arr">&rarr;</span><span class="y27">$1,480</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,575</span><span class="arr">&rarr;</span><span class="y27">$1,645</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,740</span><span class="arr">&rarr;</span><span class="y27">$1,810</span></div><div class="dd">+ $70</div></td><td class="pe"><div class="pax">pax 5<div class="sub">pers. extra</div></div><div class="row2"><span class="y26">$1,905</span><span class="arr">&rarr;</span><span class="y27">$1,985</span></div><div class="dd">+ $80</div></td></tr><tr><th>Sencilla King Villa</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$915</span><span class="arr">&rarr;</span><span class="y27">$985</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,080</span><span class="arr">&rarr;</span><span class="y27">$1,150</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,245</span><span class="arr">&rarr;</span><span class="y27">$1,315</span></div><div class="dd">+ $70</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Villa</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,310</span><span class="arr">&rarr;</span><span class="y27">$1,380</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,310</span><span class="arr">&rarr;</span><span class="y27">$1,380</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,475</span><span class="arr">&rarr;</span><span class="y27">$1,545</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,640</span><span class="arr">&rarr;</span><span class="y27">$1,710</span></div><div class="dd">+ $70</div></td><td class="pe"><div class="pax">pax 5<div class="sub">pers. extra</div></div><div class="row2"><span class="y26">$1,805</span><span class="arr">&rarr;</span><span class="y27">$1,885</span></div><div class="dd">+ $80</div></td></tr></tbody>
+          </table>
+        </section>
+        <section class="plan">
+          <header><h3>Sin Convenio &middot; Con Desayuno Buffet</h3><span class="delta">+ $80 <span class="delta-note">(+ $90 pax 5)</span></span></header>
+          <table>
+            <thead><tr><th>Tipo de habitaci&oacute;n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+            <tbody><tr><th>Sencilla King Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,120</span><span class="arr">&rarr;</span><span class="y27">$1,200</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,360</span><span class="arr">&rarr;</span><span class="y27">$1,440</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,600</span><span class="arr">&rarr;</span><span class="y27">$1,680</span></div><div class="dd">+ $80</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,560</span><span class="arr">&rarr;</span><span class="y27">$1,640</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,560</span><span class="arr">&rarr;</span><span class="y27">$1,640</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,800</span><span class="arr">&rarr;</span><span class="y27">$1,880</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$2,040</span><span class="arr">&rarr;</span><span class="y27">$2,120</span></div><div class="dd">+ $80</div></td><td class="pe"><div class="pax">pax 5<div class="sub">pers. extra</div></div><div class="row2"><span class="y26">$2,280</span><span class="arr">&rarr;</span><span class="y27">$2,370</span></div><div class="dd">+ $90</div></td></tr><tr><th>Sencilla King Villa</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$990</span><span class="arr">&rarr;</span><span class="y27">$1,070</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,230</span><span class="arr">&rarr;</span><span class="y27">$1,310</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,470</span><span class="arr">&rarr;</span><span class="y27">$1,550</span></div><div class="dd">+ $80</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Villa</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,460</span><span class="arr">&rarr;</span><span class="y27">$1,540</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,460</span><span class="arr">&rarr;</span><span class="y27">$1,540</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,700</span><span class="arr">&rarr;</span><span class="y27">$1,780</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,940</span><span class="arr">&rarr;</span><span class="y27">$2,020</span></div><div class="dd">+ $80</div></td><td class="pe"><div class="pax">pax 5<div class="sub">pers. extra</div></div><div class="row2"><span class="y26">$2,180</span><span class="arr">&rarr;</span><span class="y27">$2,270</span></div><div class="dd">+ $90</div></td></tr></tbody>
+          </table>
+        </section></div>
+
+  <div class="channel-title"><span class="dot"></span><h2>OTA's 0 a 50%</h2><span class="sub-h">+$50 base &middot; +$70 c/americano &middot; +$80 c/buffet  &middot;  s&oacute;lo Hotel</span></div>
+  <div class="plans">
+        <section class="plan">
+          <header><h3>OTA's 0 a 50% &middot; Sin Desayuno <span class="base-tag">tarifa base</span></h3><span class="delta">+ $50 <span class="delta-note">(+ $60 pax 5)</span></span></header>
+          <table>
+            <thead><tr><th>Tipo de habitaci&oacute;n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+            <tbody><tr><th>Sencilla King Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$930</span><span class="arr">&rarr;</span><span class="y27">$980</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$930</span><span class="arr">&rarr;</span><span class="y27">$980</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,030</span><span class="arr">&rarr;</span><span class="y27">$1,080</span></div><div class="dd">+ $50</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,130</span><span class="arr">&rarr;</span><span class="y27">$1,180</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,130</span><span class="arr">&rarr;</span><span class="y27">$1,180</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,230</span><span class="arr">&rarr;</span><span class="y27">$1,280</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,330</span><span class="arr">&rarr;</span><span class="y27">$1,380</span></div><div class="dd">+ $50</div></td><td class="pe"><div class="pax">pax 5<div class="sub">pers. extra</div></div><div class="row2"><span class="y26">$1,430</span><span class="arr">&rarr;</span><span class="y27">$1,490</span></div><div class="dd">+ $60</div></td></tr><tr><th>Sencilla King Villa</th><td class="na" colspan="5">N/A &mdash; no aplica en este canal</td></tr><tr><th>Doble Queen Villa</th><td class="na" colspan="5">N/A &mdash; no aplica en este canal</td></tr></tbody>
+          </table>
+        </section>
+        <section class="plan">
+          <header><h3>OTA's 0 a 50% &middot; Con Desayuno Americano</h3><span class="delta">+ $70</span></header>
+          <table>
+            <thead><tr><th>Tipo de habitaci&oacute;n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+            <tbody><tr><th>Sencilla King Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,095</span><span class="arr">&rarr;</span><span class="y27">$1,165</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,260</span><span class="arr">&rarr;</span><span class="y27">$1,330</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,425</span><span class="arr">&rarr;</span><span class="y27">$1,495</span></div><div class="dd">+ $70</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,460</span><span class="arr">&rarr;</span><span class="y27">$1,530</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,460</span><span class="arr">&rarr;</span><span class="y27">$1,530</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,625</span><span class="arr">&rarr;</span><span class="y27">$1,695</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,790</span><span class="arr">&rarr;</span><span class="y27">$1,860</span></div><div class="dd">+ $70</div></td><td class="empty">&mdash;</td></tr><tr><th>Sencilla King Villa</th><td class="na" colspan="5">N/A &mdash; no aplica en este canal</td></tr><tr><th>Doble Queen Villa</th><td class="na" colspan="5">N/A &mdash; no aplica en este canal</td></tr></tbody>
+          </table>
+        </section>
+        <section class="plan">
+          <header><h3>OTA's 0 a 50% &middot; Con Desayuno Buffet</h3><span class="delta">+ $80</span></header>
+          <table>
+            <thead><tr><th>Tipo de habitaci&oacute;n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+            <tbody><tr><th>Sencilla King Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,170</span><span class="arr">&rarr;</span><span class="y27">$1,250</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,410</span><span class="arr">&rarr;</span><span class="y27">$1,490</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,650</span><span class="arr">&rarr;</span><span class="y27">$1,730</span></div><div class="dd">+ $80</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,610</span><span class="arr">&rarr;</span><span class="y27">$1,690</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,610</span><span class="arr">&rarr;</span><span class="y27">$1,690</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,850</span><span class="arr">&rarr;</span><span class="y27">$1,930</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$2,090</span><span class="arr">&rarr;</span><span class="y27">$2,170</span></div><div class="dd">+ $80</div></td><td class="empty">&mdash;</td></tr><tr><th>Sencilla King Villa</th><td class="na" colspan="5">N/A &mdash; no aplica en este canal</td></tr><tr><th>Doble Queen Villa</th><td class="na" colspan="5">N/A &mdash; no aplica en este canal</td></tr></tbody>
+          </table>
+        </section></div>
+
+  <div class="channel-title"><span class="dot"></span><h2>OTA's 50 a 100%</h2><span class="sub-h">+$50 base &middot; +$70 c/americano &middot; +$80 c/buffet  &middot;  s&oacute;lo Hotel</span></div>
+  <div class="plans">
+        <section class="plan">
+          <header><h3>OTA's 50 a 100% &middot; Sin Desayuno <span class="base-tag">tarifa base</span></h3><span class="delta">+ $50 <span class="delta-note">(+ $60 pax 5)</span></span></header>
+          <table>
+            <thead><tr><th>Tipo de habitaci&oacute;n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+            <tbody><tr><th>Sencilla King Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,185</span><span class="arr">&rarr;</span><span class="y27">$1,235</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,185</span><span class="arr">&rarr;</span><span class="y27">$1,235</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,285</span><span class="arr">&rarr;</span><span class="y27">$1,335</span></div><div class="dd">+ $50</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,385</span><span class="arr">&rarr;</span><span class="y27">$1,435</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,385</span><span class="arr">&rarr;</span><span class="y27">$1,435</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,485</span><span class="arr">&rarr;</span><span class="y27">$1,535</span></div><div class="dd">+ $50</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,585</span><span class="arr">&rarr;</span><span class="y27">$1,635</span></div><div class="dd">+ $50</div></td><td class="pe"><div class="pax">pax 5<div class="sub">pers. extra</div></div><div class="row2"><span class="y26">$1,685</span><span class="arr">&rarr;</span><span class="y27">$1,745</span></div><div class="dd">+ $60</div></td></tr><tr><th>Sencilla King Villa</th><td class="na" colspan="5">N/A &mdash; no aplica en este canal</td></tr><tr><th>Doble Queen Villa</th><td class="na" colspan="5">N/A &mdash; no aplica en este canal</td></tr></tbody>
+          </table>
+        </section>
+        <section class="plan">
+          <header><h3>OTA's 50 a 100% &middot; Con Desayuno Americano</h3><span class="delta">+ $70</span></header>
+          <table>
+            <thead><tr><th>Tipo de habitaci&oacute;n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+            <tbody><tr><th>Sencilla King Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,350</span><span class="arr">&rarr;</span><span class="y27">$1,420</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,515</span><span class="arr">&rarr;</span><span class="y27">$1,585</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,680</span><span class="arr">&rarr;</span><span class="y27">$1,750</span></div><div class="dd">+ $70</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,515</span><span class="arr">&rarr;</span><span class="y27">$1,585</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,515</span><span class="arr">&rarr;</span><span class="y27">$1,585</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,680</span><span class="arr">&rarr;</span><span class="y27">$1,750</span></div><div class="dd">+ $70</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$1,845</span><span class="arr">&rarr;</span><span class="y27">$1,915</span></div><div class="dd">+ $70</div></td><td class="empty">&mdash;</td></tr><tr><th>Sencilla King Villa</th><td class="na" colspan="5">N/A &mdash; no aplica en este canal</td></tr><tr><th>Doble Queen Villa</th><td class="na" colspan="5">N/A &mdash; no aplica en este canal</td></tr></tbody>
+          </table>
+        </section>
+        <section class="plan">
+          <header><h3>OTA's 50 a 100% &middot; Con Desayuno Buffet</h3><span class="delta">+ $80</span></header>
+          <table>
+            <thead><tr><th>Tipo de habitaci&oacute;n</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr></thead>
+            <tbody><tr><th>Sencilla King Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,425</span><span class="arr">&rarr;</span><span class="y27">$1,505</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,665</span><span class="arr">&rarr;</span><span class="y27">$1,745</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,905</span><span class="arr">&rarr;</span><span class="y27">$1,985</span></div><div class="dd">+ $80</div></td><td class="empty">&mdash;</td><td class="empty">&mdash;</td></tr><tr><th>Doble Queen Hotel</th><td class=""><div class="pax">pax 1</div><div class="row2"><span class="y26">$1,665</span><span class="arr">&rarr;</span><span class="y27">$1,745</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 2</div><div class="row2"><span class="y26">$1,665</span><span class="arr">&rarr;</span><span class="y27">$1,745</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 3</div><div class="row2"><span class="y26">$1,905</span><span class="arr">&rarr;</span><span class="y27">$1,985</span></div><div class="dd">+ $80</div></td><td class=""><div class="pax">pax 4</div><div class="row2"><span class="y26">$2,330</span><span class="arr">&rarr;</span><span class="y27">$2,410</span></div><div class="dd">+ $80</div></td><td class="empty">&mdash;</td></tr><tr><th>Sencilla King Villa</th><td class="na" colspan="5">N/A &mdash; no aplica en este canal</td></tr><tr><th>Doble Queen Villa</th><td class="na" colspan="5">N/A &mdash; no aplica en este canal</td></tr></tbody>
+          </table>
+        </section></div>
+
+  <section class="closing">
+    <h2>Siguientes pasos</h2>
+    <p>1. Validaci&oacute;n y autorizaci&oacute;n de la presente propuesta por la Direcci&oacute;n.</p>
+    <p>2. Creaci&oacute;n de la edici&oacute;n <b>&laquo;2027 &mdash; borrador&raquo;</b> en el dashboard de la Matriz de Tarifas con los valores aqu&iacute; propuestos.</p>
+    <p>3. Publicaci&oacute;n de la edici&oacute;n &mdash; el dashboard regenera autom&aacute;ticamente <code>tarifas.json</code> (convenios) y <code>tarifas-cotizador.json</code> (cotizador de habitaciones).</p>
+    <p>4. Comunicaci&oacute;n formal a clientes de convenio con al menos 30 d&iacute;as de anticipaci&oacute;n a la fecha de entrada en vigor.</p>
+  </section>
+
+  <div class="sign">
+    <div class="box">
+      <div class="line"></div>
+      <p class="name">Ricardo Pe&ntilde;a Covarrubias</p>
+      <p class="role">Ejecutivo Comercial &mdash; Avanta Hotel &amp; Villas</p>
+    </div>
+    <div class="box">
+      <div class="line"></div>
+      <p class="name">Autorizaci&oacute;n</p>
+      <p class="role">Direcci&oacute;n General</p>
+    </div>
+  </div>
+
+  <div class="footband" aria-hidden="true"></div>
+  <div class="footmeta">
+    <b>Avanta Hotel &amp; Villas</b> &middot; BB Santiago de Quer&eacute;taro, S.A. de C.V. &middot; Oficio AV-TAR-2027-001 &middot; P&aacute;gina generada el 7 de octubre de 2026
+  </div>
+</article>
+
+</body></html>

@@ -39,6 +39,12 @@ const APPS: AppLink[] = [
     url: 'https://reporte-semanal-rho.vercel.app/',
     preview: '/apps/reporte-semanal.svg',
   },
+  {
+    nombre: 'Propuesta Tarifas 2027',
+    descripcion: 'Documento corporativo con el aumento de tarifas 2027 por canal y plan.',
+    url: '/propuesta-tarifas-2027.html',
+    preview: '/apps/propuesta-tarifas-2027.svg',
+  },
 ]
 
 export default function AppsHub() {
