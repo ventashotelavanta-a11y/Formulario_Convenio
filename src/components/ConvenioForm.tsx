@@ -178,7 +178,10 @@ export default function ConvenioForm() {
                   required
                 />
                 <label htmlFor="terms" className="font-kodchasan text-[13px] text-[#9CA3AF] cursor-pointer normal-case tracking-normal font-normal">
-                  He leído y acepto los términos y condiciones de servicio
+                  He leído y acepto los términos y condiciones de servicio y el{' '}
+                  <a href="/aviso-de-privacidad.pdf" target="_blank" rel="noopener" className="text-[#7FA44A] underline hover:text-[#5F7F34]">
+                    Aviso de Privacidad
+                  </a>
                 </label>
               </div>
 
@@ -212,6 +215,16 @@ export default function ConvenioForm() {
                   className="inline-flex items-center gap-[5px] text-[#7FA44A] no-underline transition-colors hover:text-[#5F7F34] text-[13px]"
                 >
                   <i className="fas fa-map-marker-alt" /> Ver ubicación en Google Maps
+                </a>
+              </p>
+              <p className="mt-[6px]">
+                <a
+                  href="/aviso-de-privacidad.pdf"
+                  target="_blank"
+                  rel="noopener"
+                  className="inline-flex items-center gap-[5px] text-[#7FA44A] no-underline transition-colors hover:text-[#5F7F34] text-[13px]"
+                >
+                  <i className="fas fa-shield-alt" /> Aviso de Privacidad
                 </a>
               </p>
               <div className="flex justify-center gap-3 mt-4">
