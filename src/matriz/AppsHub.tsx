@@ -6,41 +6,38 @@ interface AppLink {
 }
 
 // Agrega aquí cada nueva herramienta de Avanta conforme se vaya sumando al hub.
-// `preview` es una captura real del hero de cada app, servida desde public/apps/
-// (GitHub raw no renderizaba bien las imágenes en el navegador — reincluir los
-// binarios en el deploy es más código de despliegue pero se ve bien).
+// `preview` es una portada SVG de marca (chevrón del logo + ícono de la app),
+// servida desde public/apps/. Para una app nueva, copia un .svg y cambia el ícono.
 const APPS: AppLink[] = [
   {
     nombre: 'Cotizador de Habitaciones',
     descripcion: 'Cotizaciones de hospedaje para clientes.',
     url: 'https://cotizacion-avanta-ricardo-pena-covarrubias-projects.vercel.app/',
-    preview: '/apps/cotizador-habitaciones.jpg',
+    preview: '/apps/cotizador-habitaciones.svg',
   },
   {
     nombre: 'Cotizador Sala NOVA',
     descripcion: 'Renta de sala de juntas y coffee break.',
     url: 'https://cotizacion-sala-nova.vercel.app/',
-    preview: '/apps/cotizador-sala-nova.jpg',
+    preview: '/apps/cotizador-sala-nova.svg',
   },
   {
     nombre: 'Cotización con Alimentos',
     descripcion: 'Sala NOVA: coffee break + menú por día (plantilla editable).',
     url: 'https://cotizacion-sala-nova.vercel.app/alimentos.html',
-    // TODO: reemplazar por una captura real de alimentos.html (el placeholder
-    // de arriba se copió de cotizador-sala-nova.jpg mientras tanto).
-    preview: '/apps/cotizacion-alimentos.jpg',
+    preview: '/apps/cotizacion-alimentos.svg',
   },
   {
     nombre: 'Formulario de Convenios',
     descripcion: 'Genera convenios corporativos en PDF para empresas.',
     url: 'https://formulario-convenio.vercel.app/',
-    preview: '/apps/convenio.jpg',
+    preview: '/apps/convenio.svg',
   },
   {
     nombre: 'Reporte Semanal',
     descripcion: 'Llena el reporte de actividades semanal.',
     url: 'https://reporte-semanal-rho.vercel.app/',
-    preview: '/apps/reporte-semanal.jpg',
+    preview: '/apps/reporte-semanal.svg',
   },
 ]
 
@@ -55,7 +52,7 @@ export default function AppsHub() {
           rel="noreferrer"
           className="block bg-white rounded-xl shadow overflow-hidden hover:shadow-md transition-shadow border border-transparent hover:border-green"
         >
-          <img src={app.preview} alt={app.nombre} className="w-full h-32 object-cover border-b border-gray-100" />
+          <img src={app.preview} alt="" className="w-full h-32 object-cover border-b border-gray-100" />
           <div className="p-5">
             <h3 className="font-semibold text-gray-800 mb-1">{app.nombre}</h3>
             <p className="text-sm text-gray-500">{app.descripcion}</p>
