@@ -2,10 +2,11 @@ import { useState, type ReactNode } from 'react'
 import { useAuth } from './AuthContext'
 import ChangePasswordModal from './ChangePasswordModal'
 
-export type MatrizTab = 'matriz' | 'propuesta' | 'historial' | 'apps'
+export type MatrizTab = 'matriz' | 'matriz2027' | 'propuesta' | 'historial' | 'apps'
 
 const TABS: { key: MatrizTab; label: string }[] = [
   { key: 'matriz', label: 'Matriz actual' },
+  { key: 'matriz2027', label: 'Matriz 2027' },
   { key: 'propuesta', label: 'Propuesta de aumento' },
   { key: 'historial', label: 'Historial de ediciones' },
   { key: 'apps', label: 'Aplicaciones Avanta' },

@@ -16,7 +16,10 @@ function MatrizAppInner() {
 
   return (
     <DashboardLayout active={tab} onChangeTab={setTab}>
-      {tab === 'matriz' && <MatrizActual />}
+      {tab === 'matriz' && <MatrizActual anioEdicion={2026} />}
+      {tab === 'matriz2027' && (
+        <MatrizActual anioEdicion={2027} aviso="Borrador 2027: no está vigente. Las tarifas actuales siguen en la pestaña Matriz actual." />
+      )}
       {tab === 'propuesta' && <PropuestaView />}
       {tab === 'historial' && <HistorialEdiciones />}
       {tab === 'apps' && <AppsHub />}

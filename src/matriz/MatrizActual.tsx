@@ -4,12 +4,10 @@ import TarifaCard, { type Tarifa } from './TarifaCard'
 import NuevoModuloModal from './NuevoModuloModal'
 import EditarModuloModal from './EditarModuloModal'
 
-// ponytail: hardcoded — solo existe la edición 2026 (id 1) hasta que se cree la de 2027.
-// Cuando exista más de una edición 'borrador', reemplazar por un selector que lea
-// GET /api/matriz/ediciones y tome la de estado 'borrador' más reciente.
-const EDICION_ACTIVA_ID = 1
-
-export default function MatrizActual() {
+// La edición se elige por año: 2026 = vigente (pestaña "Matriz actual"),
+// 2027 = borrador independiente (pestaña "Matriz 2027").
+export default function MatrizActual({ anioEdicion = 2026, aviso }: { anioEdicion?: number; aviso?: string }) {
+  const [edicionId, setEdicionId] = useState<number | null>(null)
   const [tarifas, setTarifas] = useState<Tarifa[]>([])
   const [modalOpen, setModalOpen] = useState(false)
   const [filtroCanal, setFiltroCanal] = useState<string | null>(null)
@@ -19,17 +17,22 @@ export default function MatrizActual() {
   const [errorPdf, setErrorPdf] = useState<string | null>(null)
 
   async function cargar() {
-    const [data, ediciones] = await Promise.all([
-      api.get<Tarifa[]>(`/matriz/tarifas?edicionId=${EDICION_ACTIVA_ID}`),
-      api.get<{ id: number; anio: number }[]>('/matriz/ediciones'),
-    ])
-    setTarifas(data)
-    setAnio(ediciones.find((e) => e.id === EDICION_ACTIVA_ID)?.anio ?? null)
+    const ediciones = await api.get<{ id: number; anio: number }[]>('/matriz/ediciones')
+    const ed = ediciones.find((e) => e.anio === anioEdicion)
+    if (!ed) {
+      setTarifas([])
+      setEdicionId(null)
+      setAnio(null)
+      return
+    }
+    setEdicionId(ed.id)
+    setAnio(ed.anio)
+    setTarifas(await api.get<Tarifa[]>(`/matriz/tarifas?edicionId=${ed.id}`))
   }
 
   useEffect(() => {
     cargar()
-  }, [])
+  }, [anioEdicion])
 
   async function imprimirPdf() {
     setImprimiendo(true)
@@ -64,6 +67,7 @@ export default function MatrizActual() {
 
   return (
     <div>
+      {aviso && <div className="mb-4 rounded-lg bg-amber-50 border border-amber-200 text-amber-800 text-sm px-4 py-2">{aviso}</div>}
       <div className="flex items-center justify-between mb-4">
         <div className="flex gap-2">
           <button
@@ -103,9 +107,9 @@ export default function MatrizActual() {
         ))}
       </div>
 
-      {modalOpen && (
+      {modalOpen && edicionId && (
         <NuevoModuloModal
-          edicionId={EDICION_ACTIVA_ID}
+          edicionId={edicionId}
           onClose={() => setModalOpen(false)}
           onCreated={() => {
             setModalOpen(false)
