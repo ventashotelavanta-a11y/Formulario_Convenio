@@ -12,14 +12,20 @@ interface Fields {
   empresa: string
   email: string
   telefono: string
+  tipo: '' | 'hotel' | 'villas'
   terms: boolean
 }
 
-const INITIAL: Fields = { nombre: '', apellidos: '', empresa: '', email: '', telefono: '', terms: false }
+const INITIAL: Fields = { nombre: '', apellidos: '', empresa: '', email: '', telefono: '', tipo: '', terms: false }
 
 const inputCls =
   'w-full px-4 py-[14px] text-[15px] rounded-lg border border-[#E5E7EB] bg-[#FAFAFA] text-[#1F2933] font-kodchasan placeholder:text-[#C1C7CD] focus:outline-none focus:border-[#7FA44A] focus:bg-white transition-all focus:shadow-[0_0_0_3px_rgba(127,164,74,0.08)]'
 const labelCls = 'block text-[11px] tracking-[.08em] uppercase mb-2 text-[#9CA3AF] font-medium font-kodchasan'
+
+const TIPOS = [
+  { value: 'hotel', label: 'Convenio Hotel', desc: 'Sencilla King y Doble Queen en Hotel' },
+  { value: 'villas', label: 'Convenio Villas', desc: 'Sencilla King y Doble Queen en Villas' },
+] as const
 
 const statusLabel: Record<Status, string> = {
   idle: 'Enviar Convenio',
@@ -67,7 +73,7 @@ export default function ConvenioForm() {
       const pdfRes = await fetch(VERCEL_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ numeroConvenio, cliente: clienteData, fecha: fechaActual }),
+        body: JSON.stringify({ numeroConvenio, cliente: clienteData, fecha: fechaActual, tipoHabitacion: fields.tipo }),
       })
       if (!pdfRes.ok) throw new Error(`Error al generar PDF: ${pdfRes.status}`)
       const pdfData = await pdfRes.json()
@@ -81,6 +87,7 @@ export default function ConvenioForm() {
           timestamp: new Date().toISOString(),
           numeroConvenio,
           cliente: clienteData,
+          tipoConvenio: fields.tipo,
           pdf: { fileName: pdfData.fileName, base64: pdfData.pdfBase64 },
           origen: 'formulario_web',
           estado: 'pendiente',
@@ -99,6 +106,7 @@ export default function ConvenioForm() {
   }
 
   const busy = status === 'pdf' || status === 'sending'
+  const tipoSel = TIPOS.find((t) => t.value === fields.tipo)
 
   return (
     <div
@@ -121,7 +129,7 @@ export default function ConvenioForm() {
 
       <div className="relative z-10">
         {status === 'success' ? (
-          <SuccessMessage />
+          <SuccessMessage tipo={tipoSel?.label} />
         ) : (
           <>
             <div className="text-center mb-9">
@@ -142,6 +150,34 @@ export default function ConvenioForm() {
             </div>
 
             <form onSubmit={handleSubmit}>
+              <div className="mb-6">
+                <label className={labelCls}>Tipo de convenio</label>
+                <div className="flex gap-3">
+                  {TIPOS.map((t) => (
+                    <label
+                      key={t.value}
+                      className={`flex-1 cursor-pointer rounded-lg border px-4 py-3 font-kodchasan transition-all normal-case tracking-normal ${
+                        fields.tipo === t.value
+                          ? 'border-[#7FA44A] bg-[#F4F8EC] shadow-[0_0_0_3px_rgba(127,164,74,0.08)]'
+                          : 'border-[#E5E7EB] bg-[#FAFAFA] hover:border-[#7FA44A]'
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="tipo"
+                        value={t.value}
+                        className="sr-only"
+                        checked={fields.tipo === t.value}
+                        onChange={() => setFields((f) => ({ ...f, tipo: t.value }))}
+                        required
+                      />
+                      <span className="block text-[15px] font-semibold text-[#1F2933]">{t.label}</span>
+                      <span className="block text-[12px] text-[#9CA3AF] mt-1">{t.desc}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
               <div className="flex gap-4">
                 <div className="flex-1 mb-5">
                   <label className={labelCls}>Nombre</label>
@@ -195,7 +231,7 @@ export default function ConvenioForm() {
                 className="mt-[25px] w-full py-4 text-[15px] font-semibold text-white rounded-lg transition-all font-kodchasan disabled:opacity-60 disabled:cursor-not-allowed hover:-translate-y-px hover:shadow-[0_6px_16px_rgba(127,164,74,0.25)] active:translate-y-0"
                 style={{ background: busy ? '#7FA44A' : '#7FA44A' }}
               >
-                {statusLabel[status]}
+                {status === 'idle' && tipoSel ? `Enviar ${tipoSel.label}` : statusLabel[status]}
                 {busy && (
                   <span className="spin inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full ml-2 align-middle" />
                 )}

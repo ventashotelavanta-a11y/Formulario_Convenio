@@ -1,4 +1,4 @@
-export default function SuccessMessage() {
+export default function SuccessMessage({ tipo }: { tipo?: string }) {
   return (
     <div className="text-center py-[60px] px-5">
       <div
@@ -24,6 +24,9 @@ export default function SuccessMessage() {
       <p className="font-kodchasan text-base leading-[1.7] text-[#9CA3AF] max-w-[400px] mx-auto">
         Gracias por su interés. Nuestro Ejecutivo Comercial se pondrá en contacto con usted a la brevedad.
       </p>
+      {tipo && (
+        <p className="font-kodchasan text-sm mt-4 text-[#5F7F34] font-semibold">{tipo}</p>
+      )}
     </div>
   )
 }
